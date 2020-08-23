@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('Hello') }}
+                    {{ __('Admin panel') }}
                 </div>
             </div>
         </div>
