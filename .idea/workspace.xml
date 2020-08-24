@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1eff27ed-1902-4134-a555-407c23e84472" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/LocationController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/LocationRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Location.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_08_24_125502_create_locations_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/locations/create.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/locations/edit.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/locations/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/locations/partials/form-inputs.blade.php" afterDir="false" />
+    <list default="true" id="1eff27ed-1902-4134-a555-407c23e84472" name="Default Changelist" comment="View for HTTP 405 error">
       <change afterPath="$PROJECT_DIR$/resources/views/errors/405.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/CheckIsAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/CheckIsAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +143,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/locations" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/errors" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -167,6 +157,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\vhost\bus-booking-system\resources\views\errors" />
       <recent name="D:\vhost\bus-booking-system\resources\views\admin\locations" />
       <recent name="D:\vhost\bus-booking-system\resources\views\layouts" />
       <recent name="D:\vhost\bus-booking-system\resources\views\admin" />
@@ -193,7 +184,7 @@
       <workItem from="1597948033627" duration="352000" />
       <workItem from="1598098611389" duration="12758000" />
       <workItem from="1598203705389" duration="3316000" />
-      <workItem from="1598264967436" duration="13569000" />
+      <workItem from="1598264967436" duration="14238000" />
     </task>
     <task id="LOCAL-00001" summary="Create user roles and routes for admin">
       <created>1598121672145</created>
@@ -209,7 +200,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598206952219</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="CRUD for locations">
+      <created>1598280793628</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1598280793628</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,7 +220,8 @@
     </ignored-roots>
     <MESSAGE value="Create user roles and routes for admin" />
     <MESSAGE value="Redirection after login based on roles" />
-    <option name="LAST_COMMIT_MESSAGE" value="Redirection after login based on roles" />
+    <MESSAGE value="CRUD for locations" />
+    <option name="LAST_COMMIT_MESSAGE" value="CRUD for locations" />
   </component>
   <component name="WindowStateProjectService">
     <state x="578" y="289" key="#Composer" timestamp="1597938199357">
@@ -233,10 +232,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="527" y="232" key="#Notifications/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1597947853397" />
-    <state x="391" y="0" key="CommitChangelistDialog2" timestamp="1598206949648">
+    <state x="391" y="0" key="CommitChangelistDialog2" timestamp="1598281324894">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="391" y="0" key="CommitChangelistDialog2/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1598206949648" />
+    <state x="391" y="0" key="CommitChangelistDialog2/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1598281324894" />
     <state x="549" y="154" key="FileChooserDialogImpl" timestamp="1597948257264">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -273,10 +272,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="504" height="446" key="SwitcherDM/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1598120740630" />
-    <state x="361" y="141" key="Vcs.Push.Dialog.v2" timestamp="1598206955448">
+    <state x="361" y="141" key="Vcs.Push.Dialog.v2" timestamp="1598280795012">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="141" key="Vcs.Push.Dialog.v2/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1598206955448" />
+    <state x="361" y="141" key="Vcs.Push.Dialog.v2/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1598280795012" />
     <state x="570" y="313" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1597948282515">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
