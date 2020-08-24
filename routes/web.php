@@ -22,5 +22,6 @@ Route::namespace('Admin')
     ->name('admin.')
     ->middleware(['auth', 'admin'])
     ->group(function () {
-        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        Route::resource('locations', 'LocationController')->except(['show']);
     });

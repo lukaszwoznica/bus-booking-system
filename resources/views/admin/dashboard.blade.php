@@ -14,7 +14,10 @@
                         </div>
                     @endif
 
-                    {{ __('Admin panel') }}
+                        <a href="{{ route('admin.locations.index') }}">
+                            Locations
+                        </a>
+
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ class CheckIsAdmin
      */
     public function handle($request, Closure $next)
     {
-        abort_if(! $request->user()->isAdmin(), 403, 'Unauthorized');
+        abort_if(! $request->user() || ! $request->user()->isAdmin(), 403, 'Unauthorized');
 
         return $next($request);
     }
