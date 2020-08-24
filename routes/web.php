@@ -24,4 +24,5 @@ Route::namespace('Admin')
     ->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
         Route::resource('locations', 'LocationController')->except(['show']);
+        Route::resource('buses', 'BusController')->except(['show']);
     });
