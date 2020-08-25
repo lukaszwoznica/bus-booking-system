@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Location extends Model
+class Route extends Model
 {
     protected $fillable = ['name'];
 
-    public function routes()
+    public function locations()
     {
-        return $this->belongsToMany('App\Route')
+        return $this->belongsToMany('App\Location')
             ->withPivot('order', 'minutes_from_departure')
             ->withTimestamps();
     }
