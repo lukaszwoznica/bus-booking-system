@@ -42,7 +42,7 @@ class RouteRequest extends FormRequest
     public function messages()
     {
         return [
-          'locations.*.id.exists' => 'The selected :attribute does not exist.'
+            'locations.*.id.exists' => 'The selected :attribute does not exist.'
         ];
     }
 }

@@ -12,6 +12,7 @@ class Route extends Model
     {
         return $this->belongsToMany('App\Location')
             ->withPivot('order', 'minutes_from_departure')
+            ->orderBy('location_route.order')
             ->withTimestamps();
     }
 }

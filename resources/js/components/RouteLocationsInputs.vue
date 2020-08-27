@@ -9,41 +9,25 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="location0">Departure location</label>
-            <div class="d-flex">
-                <select class="form-control col-6" id="location0" name="locations[0][id]" required>
-                    <option value="" selected hidden>Choose location</option>
-                    <option v-for="location in locations" :value="location.id">
-                        {{ location.name }}
-                    </option>
-                </select>
-            </div>
-        </div>
-
         <div class="form-group" v-for="(input, index) in inputs" :key="index">
-            <label :for="`location${index + 1}`" v-show="index + 1 === inputs.length">
-                Arrival location
-            </label>
             <div class="d-flex">
                 <select class="form-control col-6"
-                        :name="`locations[${index + 1}][id]`"
-                        :id="`location${index + 1}`"
+                        :name="`locations[${index}][id]`"
+                        :id="`location${index}`"
                         required>
 
-                    <option value="" selected disabled hidden>Choose location</option>
-                    <option v-for="location in locations" :value="location.id">
+                    <option value="" hidden>Choose location</option>
+                    <option v-for="location in locations" :value="location.id" :selected="input.id === location.id">
                         {{ location.name }}
                     </option>
-
                 </select>
 
-                <input type="number" :name="`locations[${index + 1}][minutes]`" min="0"
-                       class="form-control col-3 offset-1" placeholder="Minutes" required>
+                <input type="number" :name="`locations[${index}][minutes]`" v-show="index !== 0" :disabled="index === 0"
+                       class="form-control col-3 offset-1" placeholder="Minutes" v-model="input.minutes" min="0" required>
 
                 <div class="col-3">
                     <i class="btn btn-danger" @click="removeInput(index)"
-                       v-show="index || (! index && inputs.length > 1)">-</i>
+                       v-show="index !== 0  && inputs.length > 2">-</i>
                     <i class="btn btn-primary" @click="addInput()"
                        v-show="index === inputs.length - 1">+</i>
                 </div>
@@ -54,27 +38,42 @@
 
 <script>
 export default {
+    props: [
+        'locations',
+        'route'
+    ],
+
     mounted() {
-        axios.get('/api/locations')
-            .then(response => {
-                this.locations = response.data.data;
-            });
+        if (this.route) {
+            this.fillInputsWithRouteLocations(this.route.locations)
+        } else {
+            this.inputs.push( {id: null, minutes: null}, {id: null, minutes: null} )
+        }
     },
 
     data() {
         return {
-            locations: null,
-            inputs: [{}]
+            inputs: []
         }
     },
 
     methods: {
         addInput() {
-            this.inputs.push({});
+            this.inputs.push( {id: null, minutes: null} );
+            console.log(this.inputs)
         },
 
         removeInput(index) {
             this.inputs.splice(index, 1)
+        },
+
+        fillInputsWithRouteLocations(locations) {
+            locations.forEach((location) => {
+                this.inputs.push({
+                    'id': location.pivot.location_id,
+                    'minutes': location.pivot.minutes_from_departure
+                })
+            })
         }
     }
 }

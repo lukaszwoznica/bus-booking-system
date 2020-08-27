@@ -20,28 +20,35 @@
 
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Locations</th>
+                                <th scope="col">Actions</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach ($routes as $route)
-                                    <tr>
-                                        <th scope="row">{{ $route->id }}</th>
-                                        <td>{{ $route->name }}</td>
-                                        <td>
-                                            <form action="{{ route('admin.routes.destroy', $route) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a href="{{ route('admin.routes.edit', $route) }}"
-                                                   class="btn btn-success">Edit</a>
-                                                <button class="btn btn-danger">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach ($routes as $route)
+                                <tr>
+                                    <th scope="row">{{ $route->id }}</th>
+                                    <td>{{ $route->name }}</td>
+                                    <td>
+                                        @foreach($route->locations as $location)
+                                            {{ $location->name }}
+                                        @endforeach
+
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('admin.routes.destroy', $route) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a href="{{ route('admin.routes.edit', $route) }}"
+                                               class="btn btn-success">Edit</a>
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -1946,42 +1946,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['locations', 'route'],
   mounted: function mounted() {
-    var _this = this;
-
-    axios.get('/api/locations').then(function (response) {
-      _this.locations = response.data.data;
-    });
+    if (this.route) {
+      this.fillInputsWithRouteLocations(this.route.locations);
+    } else {
+      this.inputs.push({
+        id: null,
+        minutes: null
+      }, {
+        id: null,
+        minutes: null
+      });
+    }
   },
   data: function data() {
     return {
-      locations: null,
-      inputs: [{}]
+      inputs: []
     };
   },
   methods: {
     addInput: function addInput() {
-      this.inputs.push({});
+      this.inputs.push({
+        id: null,
+        minutes: null
+      });
+      console.log(this.inputs);
     },
     removeInput: function removeInput(index) {
       this.inputs.splice(index, 1);
+    },
+    fillInputsWithRouteLocations: function fillInputsWithRouteLocations(locations) {
+      var _this = this;
+
+      locations.forEach(function (location) {
+        _this.inputs.push({
+          'id': location.pivot.location_id,
+          'minutes': location.pivot.minutes_from_departure
+        });
+      });
     }
   }
 });
@@ -37575,97 +37579,78 @@ var render = function() {
     [
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "location0" } }, [
-          _vm._v("Departure location")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "d-flex" }, [
-          _c(
-            "select",
-            {
-              staticClass: "form-control col-6",
-              attrs: { id: "location0", name: "locations[0][id]", required: "" }
-            },
-            [
-              _c("option", { attrs: { value: "", selected: "", hidden: "" } }, [
-                _vm._v("Choose location")
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.locations, function(location) {
-                return _c("option", { domProps: { value: location.id } }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(location.name) +
-                      "\n                "
-                  )
-                ])
-              })
-            ],
-            2
-          )
-        ])
-      ]),
-      _vm._v(" "),
       _vm._l(_vm.inputs, function(input, index) {
         return _c("div", { key: index, staticClass: "form-group" }, [
-          _c(
-            "label",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: index + 1 === _vm.inputs.length,
-                  expression: "index + 1 === inputs.length"
-                }
-              ],
-              attrs: { for: "location" + (index + 1) }
-            },
-            [_vm._v("\n            Arrival location\n        ")]
-          ),
-          _vm._v(" "),
           _c("div", { staticClass: "d-flex" }, [
             _c(
               "select",
               {
                 staticClass: "form-control col-6",
                 attrs: {
-                  name: "locations[" + (index + 1) + "][id]",
-                  id: "location" + (index + 1),
+                  name: "locations[" + index + "][id]",
+                  id: "location" + index,
                   required: ""
                 }
               },
               [
-                _c(
-                  "option",
-                  {
-                    attrs: { value: "", selected: "", disabled: "", hidden: "" }
-                  },
-                  [_vm._v("Choose location")]
-                ),
+                _c("option", { attrs: { value: "", hidden: "" } }, [
+                  _vm._v("Choose location")
+                ]),
                 _vm._v(" "),
                 _vm._l(_vm.locations, function(location) {
-                  return _c("option", { domProps: { value: location.id } }, [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(location.name) +
-                        "\n                "
-                    )
-                  ])
+                  return _c(
+                    "option",
+                    {
+                      domProps: {
+                        value: location.id,
+                        selected: input.id === location.id
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(location.name) +
+                          "\n                "
+                      )
+                    ]
+                  )
                 })
               ],
               2
             ),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: index !== 0,
+                  expression: "index !== 0"
+                },
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: input.minutes,
+                  expression: "input.minutes"
+                }
+              ],
               staticClass: "form-control col-3 offset-1",
               attrs: {
                 type: "number",
-                name: "locations[" + (index + 1) + "][minutes]",
-                min: "0",
+                name: "locations[" + index + "][minutes]",
+                disabled: index === 0,
                 placeholder: "Minutes",
+                min: "0",
                 required: ""
+              },
+              domProps: { value: input.minutes },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(input, "minutes", $event.target.value)
+                }
               }
             }),
             _vm._v(" "),
@@ -37677,8 +37662,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: index || (!index && _vm.inputs.length > 1),
-                      expression: "index || (! index && inputs.length > 1)"
+                      value: index !== 0 && _vm.inputs.length > 2,
+                      expression: "index !== 0  && inputs.length > 2"
                     }
                   ],
                   staticClass: "btn btn-danger",
