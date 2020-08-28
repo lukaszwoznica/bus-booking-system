@@ -17,6 +17,7 @@
                         <a href="{{ route('admin.locations.index') }}">Locations</a>
                         <a href="{{ route('admin.buses.index') }}">Buses</a>
                         <a href="{{ route('admin.routes.index') }}">Routes</a>
+                        <a href="{{ route('admin.rides.index') }}">Rides</a>
                     </div>
                 </div>
             </div>

@@ -26,4 +26,5 @@ Route::namespace('Admin')
         Route::resource('locations', 'LocationController')->except(['show']);
         Route::resource('buses', 'BusController')->except(['show']);
         Route::resource('routes', 'RouteController');
+        Route::resource('rides', 'RideController');
     });
