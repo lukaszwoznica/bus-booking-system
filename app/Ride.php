@@ -12,6 +12,6 @@ class Ride extends Model
 
     public function interval()
     {
-        return $this->hasOne('App\RideInterval');
+        return $this->hasOne('App\RideSchedule');
     }
 }

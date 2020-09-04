@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRideIntervalsTable extends Migration
+class CreateRideSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateRideIntervalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ride_intervals', function (Blueprint $table) {
+        Schema::create('ride_schedules', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ride_id')->unique()->constrained()->onDelete('cascade');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->boolean('monday');
             $table->boolean('tuesday');
             $table->boolean('wednesday');
@@ -34,6 +36,6 @@ class CreateRideIntervalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ride_intervals');
+        Schema::dropIfExists('ride_schedules');
     }
 }

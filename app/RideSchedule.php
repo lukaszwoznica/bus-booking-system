@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RideInterval extends Model
+class RideSchedule extends Model
 {
     protected $guarded = [];
 
