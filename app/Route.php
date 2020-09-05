@@ -15,4 +15,9 @@ class Route extends Model
             ->orderBy('location_route.order')
             ->withTimestamps();
     }
+
+    public function rides()
+    {
+        return $this->hasMany('App/Ride');
+    }
 }

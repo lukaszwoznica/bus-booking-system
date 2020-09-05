@@ -32,10 +32,10 @@
                                         <th scope="row">{{ $ride->id }}</th>
 
                                         <td>
-                                            <form action="{{ route('admin.ride.destroy', $bus) }}" method="POST">
+                                            <form action="{{ route('admin.rides.destroy', $ride) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a href="{{ route('admin.ride.edit', $bus) }}"
+                                                <a href="{{ route('admin.rides.edit', $ride) }}"
                                                    class="btn btn-success">Edit</a>
                                                 <button class="btn btn-danger">Delete</button>
                                             </form>

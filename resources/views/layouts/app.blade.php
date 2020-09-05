@@ -59,9 +59,9 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @isAdmin
-                                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                        {{ __('Admin panel') }}
-                                    </a>
+                                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                    {{ __('Admin panel') }}
+                                </a>
                                 @endisAdmin
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"
@@ -86,5 +86,8 @@
         @yield('content')
     </main>
 </div>
+
+@yield('scripts')
+
 </body>
 </html>

@@ -18,13 +18,13 @@ class CreateRideSchedulesTable extends Migration
             $table->foreignId('ride_id')->unique()->constrained()->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->boolean('monday');
-            $table->boolean('tuesday');
-            $table->boolean('wednesday');
-            $table->boolean('thursday');
-            $table->boolean('friday');
-            $table->boolean('saturday');
-            $table->boolean('sunday');
+            $table->boolean('monday')->default(false);
+            $table->boolean('tuesday')->default(false);
+            $table->boolean('wednesday')->default(false);
+            $table->boolean('thursday')->default(false);
+            $table->boolean('friday')->default(false);
+            $table->boolean('saturday')->default(false);
+            $table->boolean('sunday')->default(false);
             $table->timestamps();
         });
     }
