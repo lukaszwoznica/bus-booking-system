@@ -10,6 +10,10 @@ class Ride extends Model
         'bus_id', 'route_id', 'departure_time', 'ride_date'
     ];
 
+    protected $dates = [
+        'departure_time', 'ride_date'
+    ];
+
     public function bus()
     {
         return $this->belongsTo('App\Bus');

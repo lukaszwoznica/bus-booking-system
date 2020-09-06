@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-lg-10">
                 <div class="card">
                     <div class="card-header">Rides list</div>
 
@@ -22,7 +22,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>
-
+                                    <th scope="col">Route</th>
+                                    <th scope="col">Bus</th>
+                                    <th scope="col">Departure time</th>
+                                    <th scope="col">Ride type</th>
+                                    <th scope="col">Ride date</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -30,7 +34,15 @@
                                 @foreach ($rides as $ride)
                                     <tr>
                                         <th scope="row">{{ $ride->id }}</th>
-
+                                        <td>{{ $ride->route->name }}</td>
+                                        <td>{{ $ride->bus->name }}</td>
+                                        <td>{{ $ride->departure_time->format('H:i' )}}</td>
+                                        <td>
+                                            {{ $ride->ride_date ? 'Single' : 'Cyclic' }}
+                                        </td>
+                                        <td>
+                                            {{ $ride->ride_date ? $ride->ride_date->format('d.m.Y') : '-' }}
+                                        </td>
                                         <td>
                                             <form action="{{ route('admin.rides.destroy', $ride) }}" method="POST">
                                                 @csrf

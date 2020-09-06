@@ -13,7 +13,7 @@ class RideController extends Controller
 {
     public function index()
     {
-        $rides = Ride::all();
+        $rides = Ride::with(['route', 'bus'])->get();
 
         return view('admin.rides.index', compact('rides'));
     }
