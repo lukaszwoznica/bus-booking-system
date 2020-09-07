@@ -28,4 +28,9 @@ class Ride extends Model
     {
         return $this->hasOne('App\RideSchedule');
     }
+
+    public function isCyclic()
+    {
+        return ! isset($this->attributes['ride_date']);
+    }
 }

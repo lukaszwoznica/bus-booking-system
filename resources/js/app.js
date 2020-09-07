@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+require('./scripts/toggleRideFormInputs')
 
 window.Vue = require('vue');
 

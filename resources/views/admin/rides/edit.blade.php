@@ -5,11 +5,12 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">New ride</div>
+                    <div class="card-header">Edit ride</div>
 
                     <div class="card-body">
-                        <form action="{{ route('admin.rides.store') }}" method="POST">
+                        <form action="{{ route('admin.rides.update', $ride) }}" method="POST">
                             @csrf
+                            @method('PUT')
 
                             <div class="form-group">
                                 <label for="route">Route</label>
@@ -18,7 +19,7 @@
                                     <option value="" hidden>Choose route</option>
                                     @foreach($routes as $route)
                                         <option
-                                            value="{{ $route->id }}" {{ old('route_id') == $route->id ? "selected" : ""}}>
+                                            value="{{ $route->id }}" {{ old('route_id', $ride->route->id) == $route->id ? "selected" : ""}}>
                                             {{ $route->name }}
                                         </option>
                                     @endforeach
@@ -37,7 +38,7 @@
                                         class="custom-select @error('bus_id') is-invalid @enderror">
                                     <option value="" hidden>Choose bus</option>
                                     @foreach($buses as $bus)
-                                        <option value="{{ $bus->id }}" {{ old('bus_id') == $bus->id ? "selected" : ""}}>
+                                        <option value="{{ $bus->id }}" {{ old('bus_id', $ride->bus->id) == $bus->id ? "selected" : ""}}>
                                             {{ $bus->name }}
                                         </option>
                                     @endforeach
@@ -53,7 +54,8 @@
                             <div class="form-group">
                                 <label for="departure-time">Departure time</label>
                                 <input type="time" class="form-control @error('bus_id') is-invalid @enderror" required
-                                       name="departure_time" id="departure-time" value="{{ old('departure_time') }}">
+                                       name="departure_time" id="departure-time"
+                                       value="{{ old('departure_time', $ride->departure_time->format('H:i')) }}">
 
                                 @error('departure_time')
                                     <span class="invalid-feedback" role="alert">
@@ -65,7 +67,8 @@
                             <div class="form-group text-center">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="ride_type" id="ride-type-single"
-                                           value="single" {{ ! old('ride_type') || old('ride_type') == 'single' ? "checked" : "" }}>
+                                           value="single" {{ (! $ride->isCyclic() && ! old('ride_type'))
+                                                                || old('ride_type') == 'single' ? "checked" : "" }}>
                                     <label class="form-check-label" for="ride-type-single">
                                         Single ride
                                     </label>
@@ -73,7 +76,8 @@
 
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="ride_type" id="ride-type-cyclic"
-                                           value="cyclic" {{ old('ride_type') == 'cyclic' ? "checked" : "" }}>
+                                           value="cyclic" {{ ($ride->isCyclic() && ! old('ride_type'))
+                                                                || old('ride_type') == 'cyclic' ? "checked" : "" }}>
                                     <label class="form-check-label" for="ride-type-cyclic">
                                         Cyclic ride
                                     </label>
@@ -91,8 +95,10 @@
                                     <div class="form-group">
                                         <label for="ride-date">Ride date</label>
                                         <input type="date" class="form-control @error('ride_date') is-invalid @enderror"
-                                               name="ride_date" id="ride-date" value="{{ old('ride_date') }}" required
-                                            {{ old('ride_type') == 'cyclic' ? "disabled" : "" }}>
+                                               name="ride_date" id="ride-date" required
+                                               value="{{ old('ride_date', $ride->ride_date ? $ride->ride_date->format('Y-m-d') : '') }}"
+                                                {{ ($ride->isCyclic() && ! old('ride_type'))
+                                                    || old('ride_type') == 'cyclic' ? "disabled" : "" }}>
 
                                         @error('ride_date')
                                             <span class="invalid-feedback" role="alert">
@@ -108,8 +114,10 @@
                                             <div class="form-check">
                                                 <input class="form-check-input day-checkbox" type="checkbox"
                                                        name="days[{{ $day }}]" value="1" id="{{ $day }}"
-                                                    {{ ! old('ride_type') || old('ride_type') == 'single' ? "disabled" : "" }}
-                                                    {{ isset(old('days')[$day]) ? "checked" : "" }}>
+                                                        {{ (! $ride->isCyclic() && ! old('ride_type'))
+                                                            || old('ride_type') == 'single' ? "disabled" : "" }}
+                                                        {{  ($ride->schedule && $ride->schedule->$day)
+                                                            || isset(old('days')[$day]) ? "checked" : "" }}>
 
                                                 <label class="form-check-label" for="{{ $day }}">
                                                     {{ ucfirst($day) }}
@@ -128,8 +136,11 @@
                                         <label for="start-date">Start date</label>
                                         <input type="date"
                                                class="form-control @error('start_date') is-invalid @enderror"
-                                               name="start_date" id="start-date" value="{{ old('start_date') }}"
-                                               required {{ ! old('ride_type') || old('ride_type') == 'single' ? "disabled" : "" }}>
+                                               name="start_date" id="start-date" required
+                                               value="{{ old('start_date',
+                                                        isset($ride->schedule->start_date) ? $ride->schedule->start_date->format('Y-m-d') : '') }}"
+                                                {{ (! $ride->isCyclic() && ! old('ride_type'))
+                                                    || old('ride_type') == 'single' ? "disabled" : "" }}>
 
                                         @error('start_date')
                                             <span class="invalid-feedback" role="alert">
@@ -141,8 +152,10 @@
                                     <div class="form-group">
                                         <label for="end-date">End date</label>
                                         <input type="date" class="form-control @error('end_date') is-invalid @enderror"
-                                               name="end_date" id="end-date" value="{{ old('end_date') }}"
-                                            {{ ! old('ride_type') || old('ride_type') == 'single' ? "disabled" : "" }}>
+                                               name="end_date" id="end-date"
+                                               value="{{ old('end_date', isset($ride->schedule->end_date) ? $ride->schedule->end_date->format('Y-m-d') : '') }}"
+                                                {{ (! $ride->isCyclic() && ! old('ride_type'))
+                                                    || old('ride_type') == 'single' ? "disabled" : "" }}>
                                         <small class="form-text text-muted">
                                             Leave blank to make the ride cycle endless
                                         </small>
@@ -157,7 +170,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">
-                                Create
+                                Save
                             </button>
 
                         </form>

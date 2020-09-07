@@ -49902,6 +49902,8 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./scripts/toggleRideFormInputs */ "./resources/js/scripts/toggleRideFormInputs.js");
+
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -50037,6 +50039,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RouteLocationsInputs_vue_vue_type_template_id_25ba0349___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/scripts/toggleRideFormInputs.js":
+/*!******************************************************!*\
+  !*** ./resources/js/scripts/toggleRideFormInputs.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+document.addEventListener("DOMContentLoaded", function () {
+  var singleRideDateInput = document.querySelector('#ride-date');
+  var cyclicRideStartDateInput = document.querySelector('#start-date');
+  var cyclicRideEndDateInput = document.querySelector('#end-date');
+  var daysCheckboxes = document.querySelectorAll('.day-checkbox');
+  var rideTypeRadioButtons = document.querySelectorAll('input[type=radio][name="ride_type"]');
+  rideTypeRadioButtons.forEach(function (radioButton) {
+    radioButton.addEventListener('change', function () {
+      singleRideDateInput.disabled = !singleRideDateInput.disabled;
+      cyclicRideStartDateInput.disabled = !cyclicRideStartDateInput.disabled;
+      cyclicRideEndDateInput.disabled = !cyclicRideEndDateInput.disabled;
+      daysCheckboxes.forEach(function (checkbox) {
+        checkbox.disabled = !checkbox.disabled;
+      });
+    });
+  });
+});
 
 /***/ }),
 
