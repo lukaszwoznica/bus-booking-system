@@ -11,7 +11,7 @@ class LocationController extends Controller
 {
     public function index()
     {
-        $locations = Location::all();
+        $locations = Location::paginate(15);
 
         return view('admin.locations.index', compact('locations'));
     }
@@ -25,7 +25,7 @@ class LocationController extends Controller
     {
         Location::create($request->validated());
 
-        session()->flash('status', 'Location has been successfully created.');
+        session()->flash('status', 'The location has been successfully created.');
 
         return redirect()->route('admin.locations.index');
     }
@@ -39,7 +39,7 @@ class LocationController extends Controller
     {
         $location->update($request->validated());
 
-        session()->flash('status', 'Location has been successfully updated.');
+        session()->flash('status', 'The location has been successfully updated.');
 
         return redirect()->route('admin.locations.index');
     }
@@ -48,7 +48,7 @@ class LocationController extends Controller
     {
         try {
             $location->delete();
-            session()->flash('status', 'Location has been successfully deleted.');
+            session()->flash('status', 'The location has been successfully deleted.');
         } catch (\Exception $e) {
             session()->flash('status', 'An error occurred while deleting the locality.');
         }

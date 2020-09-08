@@ -12,7 +12,7 @@ class RouteController extends Controller
 {
     public function index()
     {
-        $routes = Route::with('locations')->get();
+        $routes = Route::with('locations')->paginate(15);
 
         return view('admin.routes.index', compact('routes'));
     }

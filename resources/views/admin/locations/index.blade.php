@@ -44,6 +44,16 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="d-flex">
+                            <div class="col-6">
+                                <span>
+                                    {{ "Showing {$locations->firstItem()} to {$locations->lastItem()} of {$locations->total()} entries"  }}
+                                </span>
+                            </div>
+                            <div class="col-6 d-flex justify-content-end">
+                                {{ $locations->links() }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
