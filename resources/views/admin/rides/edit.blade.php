@@ -111,15 +111,15 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         @foreach($days as $day)
-                                            <div class="form-check">
-                                                <input class="form-check-input day-checkbox" type="checkbox"
+                                            <div class="custom-control custom-switch">
+                                                <input class="custom-control-input day-checkbox" type="checkbox"
                                                        name="days[{{ $day }}]" value="1" id="{{ $day }}"
                                                         {{ (! $ride->isCyclic() && ! old('ride_type'))
                                                             || old('ride_type') == 'single' ? "disabled" : "" }}
-                                                        {{  ($ride->schedule && $ride->schedule->$day)
+                                                        {{  ($ride->schedule && $ride->schedule->$day && ! old('ride_type'))
                                                             || isset(old('days')[$day]) ? "checked" : "" }}>
 
-                                                <label class="form-check-label" for="{{ $day }}">
+                                                <label class="custom-control-label" for="{{ $day }}">
                                                     {{ ucfirst($day) }}
                                                 </label>
                                             </div>

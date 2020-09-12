@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 
 class RideController extends Controller
 {
+    private $dayNames = [
+        'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+    ];
+
     public function index()
     {
         $rides = Ride::with(['route', 'bus'])->paginate(15);
@@ -22,7 +26,7 @@ class RideController extends Controller
     {
         $buses = Bus::all();
         $routes = Route::all();
-        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        $days = $this->dayNames;
 
         return view('admin.rides.create', compact('buses', 'routes', 'days'));
     }
@@ -55,7 +59,7 @@ class RideController extends Controller
     {
         $buses = Bus::all();
         $routes = Route::all();
-        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        $days = $this->dayNames;
 
         return view('admin.rides.edit', compact('ride', 'buses', 'routes', 'days'));
     }
@@ -65,14 +69,17 @@ class RideController extends Controller
         if ($request->ride_type == 'cyclic') {
             $rideData = array_merge($request->validated(), ['ride_date' => null]);
             $requestData = collect($request->validated());
+            $days = collect($this->dayNames)
+                ->mapWithKeys(fn ($item) => [$item => 0])
+                ->replace($requestData->get('days'));
+
             $rideScheduleData = $requestData
                 ->only('start_date', 'end_date')
-                ->put('ride_id', $ride->id)
-                ->merge($requestData->get('days'))
+                ->merge($days)
                 ->toArray();
 
             $ride->update($rideData);
-            $ride->schedule()->updateOrCreate($rideScheduleData);
+            $ride->schedule()->updateOrCreate(['ride_id' => $ride->id], $rideScheduleData);
         } else {
             $ride->update($request->validated());
             $ride->schedule()->delete();
