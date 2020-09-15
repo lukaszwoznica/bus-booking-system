@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/rides', 'RideController@index')->name('rides.index');
 
 Route::namespace('Admin')
     ->prefix('admin')
