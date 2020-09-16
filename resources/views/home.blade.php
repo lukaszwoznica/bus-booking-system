@@ -15,34 +15,33 @@
                         @endif
 
                         <form action="{{ route('rides.index') }}" method="GET">
-                            <div class="form-group">
-                                <label for="start-location">From</label>
-                                <input type="text" name="start_location" id="start-location" autofocus
-                                       class="form-control @error('start_location') is-invalid @enderror" required >
 
-                                @error('start_location')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            <autocomplete-input
+                                :items='@json($locations)'
+                                :error="'{{ $errors->first("start_location") }}'"
+                                :name="'start_location'"
+                                :id="'start-location'"
+                                :label="'From'"
+                                :old="'{{ old('start_location') }}'"
+                                :required="true">
+                            </autocomplete-input>
 
-                            <div class="form-group">
-                                <label for="end-location">To</label>
-                                <input type="text" name="end_location" id="end-location"
-                                       class="form-control @error('end_location') is-invalid @enderror" required>
-
-                                @error('end_location')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            <autocomplete-input
+                                :items='@json($locations)'
+                                :error="'{{ $errors->first("end_location") }}'"
+                                :name="'end_location'"
+                                :id="'end-location'"
+                                :label="'To'"
+                                :old="'{{ old('end_location') }}'"
+                                :required="true">
+                            </autocomplete-input>
 
                             <div class="form-group">
                                 <label for="date">Departure date</label>
                                 <input type="date" name="date" id="date"
-                                       class="form-control @error('date') is-invalid @enderror" required>
+                                       class="form-control @error('date') is-invalid @enderror"
+                                       value="{{ old('date') }}"
+                                       required>
 
                                 @error('date')
                                     <span class="invalid-feedback" role="alert">
@@ -51,9 +50,11 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary">
-                                Create
-                            </button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    Search
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

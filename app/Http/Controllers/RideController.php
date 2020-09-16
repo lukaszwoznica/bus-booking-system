@@ -31,7 +31,9 @@ class RideController extends Controller
         }
 
         if (isset($errors)) {
-            return redirect()->route('home')->withErrors($errors);
+            return redirect()->route('home')
+                ->withErrors($errors)
+                ->withInput($request->input());
         }
 
         $rides = $this->ridesService->getRidesByLocations($startLocation, $endLocation, $departureDate);

@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Resources\Location as LocationResource;
+use App\Location;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $locations = Location::all()->sortBy('name');
+
+        return view('home', [
+            'locations' => LocationResource::collection($locations)
+        ]);
     }
 }
