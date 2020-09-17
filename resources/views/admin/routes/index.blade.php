@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col">
                 <div class="card">
                     <div class="card-header">Routes list</div>
 
@@ -23,7 +23,8 @@
                             <tr>
                                 <th scope="col">Id</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Locations</th>
+                                <th scope="col">Total locations</th>
+                                <th scope="col">Travel duration</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
@@ -33,15 +34,17 @@
                                     <th scope="row">{{ $route->id }}</th>
                                     <td>{{ $route->name }}</td>
                                     <td>
-                                        @foreach($route->locations as $location)
-                                            {{ $location->name }}
-                                        @endforeach
-
+                                        {{ $route->locations->count() }}
+                                    </td>
+                                    <td>
+                                        {{ $route->getTravelDuration() }}
                                     </td>
                                     <td>
                                         <form action="{{ route('admin.routes.destroy', $route) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
+                                            <a href="{{ route('admin.routes.show', $route) }}"
+                                               class="btn btn-primary">View</a>
                                             <a href="{{ route('admin.routes.edit', $route) }}"
                                                class="btn btn-success">Edit</a>
                                             <button class="btn btn-danger">Delete</button>

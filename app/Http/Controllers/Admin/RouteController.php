@@ -45,7 +45,9 @@ class RouteController extends Controller
 
     public function show(Route $route)
     {
-        //
+        $route->load('locations');
+
+        return view('admin.routes.show', compact('route'));
     }
 
     public function edit(Route $route)

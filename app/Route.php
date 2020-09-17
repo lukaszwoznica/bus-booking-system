@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Route extends Model
@@ -19,5 +20,10 @@ class Route extends Model
     public function rides()
     {
         return $this->hasMany('App/Ride');
+    }
+
+    public function getTravelDuration()
+    {
+        return $this->locations->last()->minutesFromDepartureFormatted();
     }
 }

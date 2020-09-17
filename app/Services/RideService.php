@@ -59,9 +59,10 @@ class RideService
         })->with('route.locations');
 
         if (Carbon::parse($departureDate)->isToday()) {
-            $ridesQuery->whereRaw("$departureTimeSubquery > ?", [
+            $ridesQuery->whereRaw("$departureTimeSubquery BETWEEN ? AND ?", [
                 $startLocationId,
-                Carbon::now()->toTimeString()
+                Carbon::now()->toTimeString(),
+                '23:59:59'
             ]);
         }
 
