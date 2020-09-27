@@ -58,7 +58,7 @@
                                             </ul>
                                         </td>
                                         <td>
-                                            0/47
+                                            {{ $ride->booked_seats ?? 0 }} / {{ $ride->bus->seats }}
                                         </td>
                                         <td>
                                             <button class="btn btn-primary">Book</button>

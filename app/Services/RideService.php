@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Booking;
 use App\Location;
 use App\Ride;
 use App\Route;
@@ -22,30 +23,36 @@ class RideService
         $endLocationId = $endLocation->id;
         $dayName = Str::lower(Carbon::parse($depDate)->dayName);
 
-        $routes = Route::whereHas('locations', function (Builder $query) use ($startLocationId) {
-            $query->where('id', $startLocationId);
-        })->whereHas('locations', function (Builder $query) use ($startLocationId, $endLocationId) {
-            $query->where('id', $endLocationId)
-                ->where('order', '>', function (QueryBuilder $query) use ($startLocationId) {
-                    $query->select('order')
-                        ->from('location_route')
-                        ->where('location_id', $startLocationId)
-                        ->whereColumn('route_id', 'routes.id');
-                });
-        })
-            ->get()
-            ->pluck('id')
-            ->toArray();
+        $routes = $this->getRouteIds($startLocationId, $endLocationId);
 
-        $departureTimeSubquery = DB::table('location_route')
-            ->whereRaw('location_id = ?', [$startLocationId]);
+        $startLocationRouteSubquery = DB::table('location_route')
+            ->where('location_id', $startLocationId);
+
+        $endLocationRouteSubquery = DB::table('location_route')
+            ->where('location_id', $endLocationId);
+
+        $bookedSeatsSubquery = Booking::selectRaw('SUM(seats)')
+            ->join('rides as rides_join', 'ride_id', 'rides_join.id')
+            ->join('location_route as booking_start_location', function ($join) {
+                $join->on('rides_join.route_id', 'booking_start_location.route_id')
+                    ->on('start_location_id', 'booking_start_location.location_id');
+            })->join('location_route as booking_end_location', function ($join) {
+                $join->on('rides_join.route_id', 'booking_end_location.route_id')
+                    ->on('end_location_id', 'booking_end_location.location_id');
+            })->whereColumn('ride_id', 'rides.id')
+            ->whereColumn('booking_start_location.order', '<', 'end_location.order')
+            ->whereColumn('booking_end_location.order', '>', 'start_location.order')
+            ->whereRaw('travel_date = ?')
+            ->toSql();
 
         $calculatedDepartureTime = 'departure_time + INTERVAL (start_location.minutes_from_departure) MINUTE';
-        $select = "rides.*, $calculatedDepartureTime as start_location_dep_time";
+        $select = "rides.*, $calculatedDepartureTime as start_location_dep_time, ($bookedSeatsSubquery) as booked_seats";
 
-        $ridesQuery = Ride::selectRaw($select)
-            ->joinSub($departureTimeSubquery, 'start_location', function ($join) {
+        $ridesQuery = Ride::selectRaw($select, [$depDate])
+            ->joinSub($startLocationRouteSubquery, 'start_location', function ($join) {
                 $join->on('rides.route_id', 'start_location.route_id');
+            })->joinSub($endLocationRouteSubquery, 'end_location', function ($join) {
+                $join->on('rides.route_id', 'end_location.route_id');
             })->whereHas('route', function (Builder $query) use ($routes) {
                 $query->whereIn('id', $routes);
             })->where(function (Builder $query) use ($dayName, $depDate, $calculatedDepartureTime) {
@@ -71,7 +78,7 @@ class RideService
                                 ->whereRaw("$calculatedDepartureTime > ?", ['23:59:59']);
                         });
                 });
-            })->with('route.locations');
+            })->with('route.locations', 'bus');
 
         if (Carbon::parse($depDate)->isToday()) {
             $ridesQuery->whereRaw("$calculatedDepartureTime BETWEEN ? AND ?", [
@@ -86,5 +93,23 @@ class RideService
         });
 
         return $rides->sortBy('start_location_dep_time');
+    }
+
+    private function getRouteIds(int $startLocationId, int $endLocationId): array
+    {
+        return Route::whereHas('locations', function (Builder $query) use ($startLocationId) {
+            $query->where('id', $startLocationId);
+        })->whereHas('locations', function (Builder $query) use ($startLocationId, $endLocationId) {
+            $query->where('id', $endLocationId)
+                ->where('order', '>', function (QueryBuilder $query) use ($startLocationId) {
+                    $query->select('order')
+                        ->from('location_route')
+                        ->where('location_id', $startLocationId)
+                        ->whereColumn('route_id', 'routes.id');
+                });
+        })
+            ->get()
+            ->pluck('id')
+            ->toArray();
     }
 }

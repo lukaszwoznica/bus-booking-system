@@ -24,6 +24,11 @@ class Ride extends Model
         return $this->belongsTo('App\Route');
     }
 
+    public function bookings()
+    {
+        return $this->hasMany('App\Booking');
+    }
+
     public function schedule()
     {
         return $this->hasOne('App\RideSchedule');

@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role')->withTimestamps();
     }
 
+    public function bookings()
+    {
+        return $this->hasMany('App\Bookings');
+    }
+
     public function hasAnyRoles(array $roles): bool
     {
         if ($this->roles()->whereIn('name', $roles)->first()) {
