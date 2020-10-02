@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public function bookings()
     {
-        return $this->hasMany('App\Bookings');
+        return $this->hasMany('App\Booking');
     }
 
     public function hasAnyRoles(array $roles): bool

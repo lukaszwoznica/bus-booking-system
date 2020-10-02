@@ -18,6 +18,11 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/rides', 'RideController@index')->name('rides.index');
 
+Route::get('/new-booking/{ride}/{startLocation}/{endLocation}/{date}', 'BookingController@create')
+    ->name('bookings.create');
+
+Route::post('/bookings', 'BookingController@store')->name('bookings.store');
+
 Route::namespace('Admin')
     ->prefix('admin')
     ->name('admin.')

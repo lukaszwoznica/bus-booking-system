@@ -18,6 +18,7 @@ class CreateBookingsTable extends Migration
             $table->foreignId('ride_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('travel_date');
+            $table->date('ride_start_date');
             $table->unsignedBigInteger('start_location_id');
             $table->unsignedBigInteger('end_location_id');
             $table->integer('seats');

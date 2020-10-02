@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+    protected $fillable = [
+        'ride_id', 'user_id', 'travel_date', 'ride_start_date', 'start_location_id', 'end_location_id', 'seats'
+    ];
+
     public function ride()
     {
         return $this->belongsTo('App\Ride');
