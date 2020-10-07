@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
     protected $fillable = [
-        'ride_id', 'user_id', 'travel_date', 'ride_start_date', 'start_location_id', 'end_location_id', 'seats'
+        'ride_id', 'user_id', 'travel_date', 'ride_start_date', 'start_location_id', 'end_location_id', 'seats', 'status'
+    ];
+
+    protected $attributes = [
+        'status' => BookingStatus::PROCESSING
     ];
 
     public function ride()

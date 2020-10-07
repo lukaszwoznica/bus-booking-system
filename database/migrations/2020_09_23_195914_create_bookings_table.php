@@ -22,6 +22,7 @@ class CreateBookingsTable extends Migration
             $table->unsignedBigInteger('start_location_id');
             $table->unsignedBigInteger('end_location_id');
             $table->integer('seats');
+            $table->enum('status', ['processing', 'confirmed', 'rejected', 'cancelled']);
             $table->timestamps();
 
             $table->foreign('start_location_id')

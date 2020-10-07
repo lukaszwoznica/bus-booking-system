@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Booking;
+use App\BookingStatus;
 use App\Location;
 use App\Ride;
 use App\Route;
@@ -60,11 +61,12 @@ class RideService
                 ['ride_id', '=', 'rides.id'],
                 ['booking_start_location.order', '<', 'end_location.order'],
                 ['booking_end_location.order', '>', 'start_location.order']
-            ])->toSql();
+            ])->whereRaw('status = ?')
+            ->toSql();
 
         $select = "rides.*, $calculatedDepartureTime as start_location_dep_time, ($bookedSeatsSubquery) as booked_seats";
 
-        $ridesQuery = Ride::selectRaw($select, [$dayBefore, $depDate])
+        $ridesQuery = Ride::selectRaw($select, [$dayBefore, $depDate, BookingStatus::CONFIRMED])
             ->joinSub($startLocationRouteSubquery, 'start_location', function ($join) {
                 $join->on('rides.route_id', 'start_location.route_id');
             })->joinSub($endLocationRouteSubquery, 'end_location', function ($join) {

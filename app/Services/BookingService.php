@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Booking;
+use App\BookingStatus;
 use App\Exceptions\NotEnoughSeatsAvailableException;
 use App\Ride;
 use Carbon\Carbon;
@@ -64,7 +65,8 @@ class BookingService
             })->where([
                 ['ride_id', '=', $ride->id],
                 ['start_location.order', '<', $endLocation->pivot->order],
-                ['end_location.order', '>', $startLocation->pivot->order]
+                ['end_location.order', '>', $startLocation->pivot->order],
+                ['status', '=', BookingStatus::CONFIRMED]
             ])->where(function (Builder $query) use ($calculatedDepartureTime, $minutesFromDep, $dayBefore, $date) {
                 $query->where(function (Builder $query) use ($calculatedDepartureTime, $minutesFromDep, $dayBefore) {
                     $query->whereRaw("$calculatedDepartureTime > '23:59:59'", [$minutesFromDep])
