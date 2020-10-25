@@ -46,6 +46,24 @@ class BookingService
         ));
     }
 
+    public function updateStatus(Booking $booking, string $status) {
+        if ($status == BookingStatus::CONFIRMED) {
+            $bookedSeats = $this->getBookedSeatsSum($booking->ride,
+                $booking->startLocation->id,
+                $booking->endLocation->id,
+                $booking->travel_date->toDateString());
+            $availableSeats = $booking->ride->bus->seats - $bookedSeats;
+
+            if ($booking->seats > $availableSeats) {
+                throw new NotEnoughSeatsAvailableException('Not enough seats are available for this ride');
+            }
+        }
+
+        $booking->update([
+            'status' => $status
+        ]);
+    }
+
     public function getBookedSeatsSum(Ride $ride, int $startLocationId, int $endLocationId, string $date): int
     {
         $startLocation = $ride->route->locations->where('id', $startLocationId)->first();

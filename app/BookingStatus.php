@@ -4,7 +4,7 @@
 namespace App;
 
 
-class BookingStatus
+class BookingStatus extends Enum
 {
     const PROCESSING = 'processing';
     const CONFIRMED = 'confirmed';

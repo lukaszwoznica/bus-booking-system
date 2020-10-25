@@ -74,4 +74,9 @@ class User extends Authenticatable
     {
         return $this->hasAnyRoles(['super_admin', 'admin']);
     }
+
+    public function getFullName(): string
+    {
+        return "{$this->attributes['first_name']} {$this->attributes['last_name']}";
+    }
 }

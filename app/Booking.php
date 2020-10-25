@@ -14,6 +14,10 @@ class Booking extends Model
         'status' => BookingStatus::PROCESSING
     ];
 
+    protected $dates = [
+        'travel_date', 'ride_start_date'
+    ];
+
     public function ride()
     {
         return $this->belongsTo('App\Ride');
