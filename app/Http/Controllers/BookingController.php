@@ -77,9 +77,9 @@ class BookingController extends Controller
     {
         if ($booking->canBeCancelled()) {
             $this->bookingService->updateStatus($booking, BookingStatus::CANCELLED);
-            session()->flash('status', 'The booking has been cancelled.');
+            flash('The booking has been cancelled.')->success();
         } else {
-            session()->flash('status', 'This booking can not be cancelled.');
+            flash('This booking can not be cancelled.')->warning();
         }
 
         return redirect()->route('bookings.index');
