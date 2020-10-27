@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Booking;
+use App\BookingStatus;
 use App\Exceptions\NotEnoughSeatsAvailableException;
 use App\Http\Requests\StoreBookingRequest;
 use App\Location;
@@ -21,6 +23,16 @@ class BookingController extends Controller
         $this->bookingService = $bookingService;
 
         $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        $bookings = auth()->user()->bookings()
+            ->with('ride', 'startLocation', 'endLocation')
+            ->latest()
+            ->paginate(15);
+
+        return view('bookings.index', compact('bookings'));
     }
 
     public function create(Ride $ride, Location $startLocation, Location $endLocation, string $date)
@@ -59,5 +71,17 @@ class BookingController extends Controller
         session()->flash('status', 'The booking has been successfully created.');
 
         return redirect()->route('home');
+    }
+
+    public function cancel(Booking $booking)
+    {
+        if ($booking->canBeCancelled()) {
+            $this->bookingService->updateStatus($booking, BookingStatus::CANCELLED);
+            session()->flash('status', 'The booking has been cancelled.');
+        } else {
+            session()->flash('status', 'This booking can not be cancelled.');
+        }
+
+        return redirect()->route('bookings.index');
     }
 }

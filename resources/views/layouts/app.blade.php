@@ -64,6 +64,10 @@
                                 </a>
                                 @endisAdmin
 
+                                <a class="dropdown-item" href="{{ route('bookings.index') }}">
+                                    My bookings
+                                </a>
+
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

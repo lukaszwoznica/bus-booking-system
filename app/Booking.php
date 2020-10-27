@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
@@ -36,5 +37,19 @@ class Booking extends Model
     public function endLocation()
     {
         return $this->belongsTo('App\Location', 'end_location_id');
+    }
+
+    public function canBeCancelled(): bool
+    {
+        $rideDepartureTime = $this->ride->departure_time;
+        $startLocationMinutesFromDeparture = $this->ride->route->locations
+            ->find($this->startLocation->id)
+            ->pivot->minutes_from_departure;
+        $bookingDeparture = $this->ride_start_date
+            ->setTimeFrom($rideDepartureTime)
+            ->addMinutes($startLocationMinutesFromDeparture);
+
+        return Carbon::now()->diffInHours($bookingDeparture, false) >= 2
+            && ($this->status != BookingStatus::CANCELLED && $this->status != BookingStatus::REJECTED);
     }
 }
