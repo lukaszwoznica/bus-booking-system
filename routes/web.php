@@ -35,4 +35,5 @@ Route::namespace('Admin')
         Route::resource('routes', 'RouteController');
         Route::resource('rides', 'RideController');
         Route::resource('bookings', 'BookingController')->except(['show', 'create', 'store']);
+        Route::resource('users', 'UserController')->except(['show']);;
     });

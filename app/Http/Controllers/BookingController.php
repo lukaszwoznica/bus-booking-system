@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Booking;
 use App\BookingStatus;
 use App\Exceptions\NotEnoughSeatsAvailableException;
-use App\Http\Requests\StoreBookingRequest;
+use App\Http\Requests\PostBookingRequest;
 use App\Location;
 use App\Ride;
 use App\Services\BookingService;
@@ -56,7 +56,7 @@ class BookingController extends Controller
         return redirect()->route('home');
     }
 
-    public function store(StoreBookingRequest $request)
+    public function store(PostBookingRequest $request)
     {
         try {
             $this->bookingService->create($request->validated());
