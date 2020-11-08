@@ -10,9 +10,11 @@
                     <div class="card-body">
                         @include('flash::message')
 
-                        <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">
-                            Add user
-                        </a>
+                        @can('create', App\User::class)
+                            <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">
+                                Add user
+                            </a>
+                        @endcan
 
                         <table class="table">
                             <thead>
@@ -23,7 +25,12 @@
                                     <th scope="col">Email</th>
                                     <th scope="col">Join date</th>
                                     <th scope="col">Roles</th>
-                                    <th scope="col">Actions</th>
+                                    @can('updateOrDeleteAny', \App\User::class)
+                                        @php $canUpdateOrDelete = true; @endphp
+                                        <th scope="col">Actions</th>
+                                    @else
+                                        @php $canUpdateOrDelete = false; @endphp
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,15 +44,19 @@
                                         <td>
                                             {{ $user->roles->pluck('name')->implode(', ') }}
                                         </td>
-                                        <td>
-                                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a href="{{ route('admin.users.edit', $user) }}"
-                                                   class="btn btn-sm btn-success">Edit</a>
-                                                <button class="btn btn-sm btn-danger">Delete</button>
-                                            </form>
-                                        </td>
+                                        @if($canUpdateOrDelete)
+                                                <td>
+                                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <a href="{{ route('admin.users.edit', $user) }}"
+                                                           class="btn btn-sm btn-success">Edit</a>
+                                                            @if(Auth::user()->id != $user->id)
+                                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                                            @endif
+                                                    </form>
+                                                </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

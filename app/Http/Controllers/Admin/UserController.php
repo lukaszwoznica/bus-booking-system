@@ -7,13 +7,20 @@ use App\Http\Requests\PostUserRequest;
 use App\Http\Requests\PutUserRequest;
 use App\Role;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
     public function index()
     {
         $users = User::with('roles')->paginate(15);
+        Auth::user()->load('roles');
 
         return view('admin.users.index', compact('users'));
     }
