@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/rides', 'RideController@index')->name('rides.index');
@@ -27,7 +27,7 @@ Route::patch('/bookings/{booking}', 'BookingController@cancel')->name('bookings.
 Route::namespace('Admin')
     ->prefix('admin')
     ->name('admin.')
-    ->middleware(['auth', 'admin'])
+    ->middleware(['auth', 'verified', 'admin'])
     ->group(function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
         Route::resource('locations', 'LocationController')->except(['show']);

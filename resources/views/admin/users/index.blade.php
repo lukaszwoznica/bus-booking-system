@@ -24,6 +24,7 @@
                                     <th scope="col">Last name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Join date</th>
+                                    <th scope="col">Verified</th>
                                     <th scope="col">Roles</th>
                                     @can('updateOrDeleteAny', \App\User::class)
                                         @php $canUpdateOrDelete = true; @endphp
@@ -41,6 +42,7 @@
                                         <td>{{ $user->last_name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->created_at->format('d.m.Y') }}</td>
+                                        <td>{{ $user->hasVerifiedEmail() ? 'Yes' : 'No' }}</td>
                                         <td>
                                             {{ $user->roles->pluck('name')->implode(', ') }}
                                         </td>

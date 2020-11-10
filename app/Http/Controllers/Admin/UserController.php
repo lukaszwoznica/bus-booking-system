@@ -39,6 +39,7 @@ class UserController extends Controller
 
         $user = User::create($requestData);
         $user->roles()->attach($requestData['roles']);
+        $user->markEmailAsVerified();
 
         flash('The user has been successfully created.')->success();
 

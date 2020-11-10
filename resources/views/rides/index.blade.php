@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('inactive-account-alert')
+    @include('partials.inactive-account-alert')
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">

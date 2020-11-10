@@ -22,7 +22,7 @@ class BookingController extends Controller
         $this->ridesService = $rideService;
         $this->bookingService = $bookingService;
 
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
 
     public function index()

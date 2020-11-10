@@ -86,6 +86,10 @@
         </div>
     </nav>
 
+    @include('flash::message')
+
+    @yield('inactive-account-alert')
+
     <main class="py-4">
         @yield('content')
     </main>
