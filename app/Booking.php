@@ -52,4 +52,28 @@ class Booking extends Model
         return Carbon::now()->diffInHours($bookingDeparture, false) >= 2
             && ($this->status != BookingStatus::CANCELLED && $this->status != BookingStatus::REJECTED);
     }
+
+    public function getDepartureTime()
+    {
+        $minutesFromDept = $this->ride->route->locations
+            ->where('id', $this->startLocation->id)
+            ->first()
+            ->pivot->minutes_from_departure;
+
+        return $this->ride->departure_time
+            ->addMinutes($minutesFromDept)
+            ->format('H:i');
+    }
+
+    public function getArrivalTime()
+    {
+        $minutesFromDept = $this->ride->route->locations
+            ->where('id', $this->endLocation->id)
+            ->first()
+            ->pivot->minutes_from_departure;
+
+        return $this->ride->departure_time
+            ->addMinutes($minutesFromDept)
+            ->format('H:i');
+    }
 }

@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Booking;
 use App\BookingStatus;
+use App\Events\BookingStatusChanged;
 use App\Exceptions\NotEnoughSeatsAvailableException;
 use App\Ride;
 use Carbon\Carbon;
@@ -46,7 +47,8 @@ class BookingService
         ));
     }
 
-    public function updateStatus(Booking $booking, string $status) {
+    public function updateStatus(Booking $booking, string $status)
+    {
         if ($status == BookingStatus::CONFIRMED) {
             $bookedSeats = $this->getBookedSeatsSum($booking->ride,
                 $booking->startLocation->id,
@@ -62,6 +64,10 @@ class BookingService
         $booking->update([
             'status' => $status
         ]);
+
+        if ($status != BookingStatus::PROCESSING) {
+            event(new BookingStatusChanged($booking));
+        }
     }
 
     public function getBookedSeatsSum(Ride $ride, int $startLocationId, int $endLocationId, string $date): int
