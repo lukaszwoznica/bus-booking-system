@@ -18,6 +18,10 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/rides', 'RideController@index')->name('rides.index');
 
+Route::get('/profile', 'ProfileController@edit')->name('profile.edit');
+Route::patch('/profile/{user}', 'ProfileController@update')->name('profile.update');
+Route::patch('/update-password/{user}', 'ProfileController@updatePassword')->name('profile.update-password');
+
 Route::get('/my-bookings', 'BookingController@index')->name('bookings.index');
 Route::get('/new-booking/{ride}/{startLocation}/{endLocation}/{date}', 'BookingController@create')
     ->name('bookings.create');
