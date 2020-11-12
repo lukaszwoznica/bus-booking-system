@@ -6,10 +6,8 @@ use App\Booking;
 use App\BookingStatus;
 use App\Exceptions\NotEnoughSeatsAvailableException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PatchBookingRequest;
-use App\Ride;
+use App\Http\Requests\Admin\Booking\PatchBookingRequest;
 use App\Services\BookingService;
-use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {

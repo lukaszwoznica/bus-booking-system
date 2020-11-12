@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\Booking;
 
+use App\BookingStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdatePasswordRequest extends FormRequest
+class PatchBookingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +25,15 @@ class UpdatePasswordRequest extends FormRequest
      */
     public function rules()
     {
+        $statuses = [];
+        foreach (BookingStatus::getKeys() as $status) {
+            $statuses[] = strtolower($status);
+        }
+
         return [
-            'current_password' => 'required|string',
-            'password' => 'required|string|min:8|confirmed',
+            'status' => [
+                'required', 'string', Rule::in($statuses)
+            ]
         ];
     }
 }

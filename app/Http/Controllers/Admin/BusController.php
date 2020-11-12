@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Bus;
-use App\Http\Requests\BusRequest;
+use App\Http\Requests\Admin\Bus\BusRequest;
 
 class BusController extends Controller
 {

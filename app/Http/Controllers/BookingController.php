@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Booking;
 use App\BookingStatus;
 use App\Exceptions\NotEnoughSeatsAvailableException;
-use App\Http\Requests\PostBookingRequest;
+use App\Http\Requests\Booking\PostBookingRequest;
 use App\Location;
 use App\Ride;
 use App\Services\BookingService;

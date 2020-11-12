@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\Location;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostUserRequest extends FormRequest
+class LocationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,19 +24,19 @@ class PostUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-            'roles' => 'required|array|min:1',
-            'roles.*' => 'integer|exists:roles,id'
+            'name' => 'required|unique:locations,name|max:255'
         ];
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [
-            'roles.required' => 'The user must have at least 1 role.',
+            'name.unique' => 'This location already exists.',
         ];
     }
 }

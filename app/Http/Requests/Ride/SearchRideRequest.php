@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Ride;
 
-use App\BookingStatus;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class PatchBookingRequest extends FormRequest
+class SearchRideRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +23,13 @@ class PatchBookingRequest extends FormRequest
      */
     public function rules()
     {
-        $statuses = [];
-        foreach (BookingStatus::getKeys() as $status) {
-            $statuses[] = strtolower($status);
-        }
+        $today = now()->toDateString();
+        $locationRegex = '/^[\p{L}]+[\p{L}\- ]*[\p{L}]+$/u';
 
         return [
-            'status' => [
-                'required', 'string', Rule::in($statuses)
-            ]
+            'start_location' => "required|string|regex:$locationRegex",
+            'end_location' => "required|string|regex:$locationRegex",
+            'date' => "required|date|after_or_equal:$today"
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PutUserRequest extends PostUserRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,10 @@ class PutUserRequest extends PostUserRequest
      */
     public function rules()
     {
-        $rules = parent::rules();
-        $rules['password'] = 'nullable|string|min:8';
-        $rules['email'] = "required|string|email|max:255|unique:users,email,{$this->user->id}";
-
-        return $rules;
+        return [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => "required|string|email|max:255|unique:users,email,{$this->user->id}",
+        ];
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Requests\SearchRideRequest;
+use App\Http\Requests\Ride\SearchRideRequest;
 use App\Location;
 use App\Services\RideService;
 

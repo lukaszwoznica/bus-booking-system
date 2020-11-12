@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LocationRequest;
+use App\Http\Requests\Admin\Location\LocationRequest;
 use App\Location;
-use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {

@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Bus;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RideRequest;
+use App\Http\Requests\Admin\Ride\RideRequest;
 use App\Ride;
 use App\Route;
-use Illuminate\Http\Request;
 
 class RideController extends Controller
 {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RouteRequest;
+use App\Http\Requests\Admin\Route\RouteRequest;
 use App\Http\Resources\Location as LocationResource;
 use App\Location;
 use App\Route;

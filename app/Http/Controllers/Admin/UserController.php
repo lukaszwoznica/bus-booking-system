@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostUserRequest;
-use App\Http\Requests\PutUserRequest;
+use App\Http\Requests\Admin\User\PostUserRequest;
+use App\Http\Requests\Admin\User\PutUserRequest;
 use App\Role;
 use App\User;
 use Illuminate\Support\Facades\Auth;

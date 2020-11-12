@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProfileRequest extends FormRequest
+class PostUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,17 @@ class UpdateProfileRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => "required|string|email|max:255|unique:users,email,{$this->user->id}",
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+            'roles' => 'required|array|min:1',
+            'roles.*' => 'integer|exists:roles,id'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'roles.required' => 'The user must have at least 1 role.',
         ];
     }
 }

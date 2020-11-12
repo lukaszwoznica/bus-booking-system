@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchRideRequest extends FormRequest
+class UpdatePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +23,9 @@ class SearchRideRequest extends FormRequest
      */
     public function rules()
     {
-        $today = now()->toDateString();
-        $locationRegex = '/^[\p{L}]+[\p{L}\- ]*[\p{L}]+$/u';
-
         return [
-            'start_location' => "required|string|regex:$locationRegex",
-            'end_location' => "required|string|regex:$locationRegex",
-            'date' => "required|date|after_or_equal:$today"
+            'current_password' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
         ];
     }
 }
