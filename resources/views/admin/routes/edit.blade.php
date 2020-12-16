@@ -1,22 +1,29 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Edit route')
+
+@section('content_header')
+    <h1>Routes</h1>
+@endsection
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Edit route: {{ $route->name }}</div>
+                <div class="card card-outline card-primary elevation-2">
+                    <div class="card-header">
+                        <h4>Edit route</h4>
+                    </div>
 
-                    <div class="card-body">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li class="text-danger">{{ $error }}</li>
-                            @endforeach
-                        </ul>
-
-                        <form action="{{ route('admin.routes.update', $route) }}" method="POST">
+                    <form action="{{ route('admin.routes.update', $route) }}" method="POST">
+                        <div class="card-body">
                             @csrf
                             @method('PUT')
+                            {{--                        <ul>--}}
+                            {{--                            @foreach ($errors->all() as $error)--}}
+                            {{--                                <li class="text-danger">{{ $error }}</li>--}}
+                            {{--                            @endforeach--}}
+                            {{--                        </ul>--}}
 
                             <div class="form-group">
                                 <label for="name">Route name</label>
@@ -27,13 +34,15 @@
 
                             <route-locations-inputs :route='{{ $route }}' :locations='@json($locations)'>
                             </route-locations-inputs>
-
-                            <button type="submit" class="btn btn-primary">
-                                Create
-                            </button>
-
-                        </form>
-                    </div>
+                        </div>
+                        <div class="card-footer row justify-content-center">
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

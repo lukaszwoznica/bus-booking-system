@@ -5,13 +5,13 @@
                 <h5>Locations</h5>
             </div>
             <div class="col-6 text-center">
-                <h5>Estimated time from departure</h5>
+                <h5>Time since departure</h5>
             </div>
         </div>
 
         <div class="form-group" v-for="(input, index) in inputs" :key="index">
             <div class="d-flex">
-                <select class="form-control col-6"
+                <select class="form-control col-6 custom-select"
                         :name="`locations[${index}][id]`"
                         :id="`location${index}`"
                         required>
@@ -23,13 +23,15 @@
                 </select>
 
                 <input type="number" :name="`locations[${index}][minutes]`" v-show="index !== 0" :disabled="index === 0"
-                       class="form-control col-3 offset-1" placeholder="Minutes" v-model="input.minutes" min="0" required>
+                       class="form-control col-3 offset-1 mr-2" placeholder="Minutes" v-model="input.minutes" min="0" required>
 
-                <div class="col-3">
-                    <i class="btn btn-danger" @click="removeInput(index)"
-                       v-show="index !== 0  && inputs.length > 2">-</i>
-                    <i class="btn btn-primary" @click="addInput()"
-                       v-show="index === inputs.length - 1">+</i>
+                <div class="col-3 d-flex align-items-center dynamic-inputs-buttons">
+                    <i class="fas fa-minus text-danger fa-lg mr-2" @click="removeInput(index)"
+                       v-show="index !== 0  && inputs.length > 2">
+                    </i>
+                    <i class="fas fa-plus text-success fa-lg" @click="addInput()"
+                       v-show="index === inputs.length - 1">
+                    </i>
                 </div>
             </div>
         </div>

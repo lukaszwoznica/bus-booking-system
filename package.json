@@ -12,6 +12,8 @@
     "devDependencies": {
         "axios": "^0.19",
         "bootstrap": "^4.0.0",
+        "browser-sync": "^2.26.13",
+        "browser-sync-webpack-plugin": "^2.0.1",
         "cross-env": "^7.0",
         "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
@@ -23,5 +25,11 @@
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
-    "dependencies": {}
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.1",
+        "icheck-bootstrap": "^3.0.1",
+        "overlayscrollbars": "^1.13.0",
+        "sweetalert": "^2.1.2",
+        "sweetalert2": "^10.12.5"
+    }
 }

@@ -1,59 +1,76 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Routes')
+
+@section('content_header')
+    <h1>Routes</h1>
+@endsection
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">Routes list</div>
+            <div class="col-12">
+                <div class="card card-outline card-indigo elevation-2">
+                    <div class="card-header">
+                        <h4>Routes manager</h4>
+                    </div>
 
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                        @include('flash::message')
 
-                        <a href="{{ route('admin.routes.create') }}" class="btn btn-primary mb-3">
+                        <a href="{{ route('admin.routes.create') }}" class="btn btn-dark mb-3">
+                            <i class="fas fa-fw fa-plus"></i>
                             Add route
                         </a>
 
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Total locations</th>
-                                <th scope="col">Travel duration</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($routes as $route)
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-light">
                                 <tr>
-                                    <th scope="row">{{ $route->id }}</th>
-                                    <td>{{ $route->name }}</td>
-                                    <td>
-                                        {{ $route->locations->count() }}
-                                    </td>
-                                    <td>
-                                        {{ $route->getTravelDuration() }}
-                                    </td>
-                                    <td>
-                                        <form action="{{ route('admin.routes.destroy', $route) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="{{ route('admin.routes.show', $route) }}"
-                                               class="btn btn-primary">View</a>
-                                            <a href="{{ route('admin.routes.edit', $route) }}"
-                                               class="btn btn-success">Edit</a>
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </td>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Total locations</th>
+                                    <th scope="col">Travel duration</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach ($routes as $route)
+                                    <tr>
+                                        <th scope="row">{{ $route->id }}</th>
+                                        <td>{{ $route->name }}</td>
+                                        <td>
+                                            {{ $route->locations->count() }}
+                                        </td>
+                                        <td>
+                                            {{ $route->getTravelDuration() }}
+                                        </td>
+                                        <td>
+                                            <form action="{{ route('admin.routes.destroy', $route) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="{{ route('admin.routes.show', $route) }}"
+                                                   class="btn btn-secondary btn-sm">
+                                                    <i class="fas fa-fw fa-eye"></i>
+                                                    View
+                                                </a>
+                                                <a href="{{ route('admin.routes.edit', $route) }}"
+                                                   class="btn btn-success btn-sm">
+                                                    <i class="fas fa-fw fa-edit"></i>
+                                                    Edit
+                                                </a>
+                                                <button class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-fw fa-trash-alt"></i>
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="d-flex">
                             <div class="col-6">
                                 <span>

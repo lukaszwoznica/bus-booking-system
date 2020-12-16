@@ -1,25 +1,31 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Rides')
+
+@section('content_header')
+    <h1>Rides</h1>
+@endsection
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="card">
-                    <div class="card-header">Rides list</div>
+            <div class="col-12">
+                <div class="card card-outline card-indigo elevation-2">
+                    <div class="card-header">
+                        <h4>Rides manager</h4>
+                    </div>
 
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                        @include('flash::message')
 
-                        <a href="{{ route('admin.rides.create') }}" class="btn btn-primary mb-3">
+                        <a href="{{ route('admin.rides.create') }}" class="btn btn-dark mb-3">
+                            <i class="fas fa-fw fa-plus"></i>
                             Add ride
                         </a>
 
-                        <table class="table">
-                            <thead>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Id</th>
                                     <th scope="col">Route</th>
@@ -29,8 +35,8 @@
                                     <th scope="col">Ride date</th>
                                     <th scope="col">Actions</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 @foreach ($rides as $ride)
                                     <tr>
                                         <th scope="row">{{ $ride->id }}</th>
@@ -48,14 +54,22 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <a href="{{ route('admin.rides.edit', $ride) }}"
-                                                   class="btn btn-success">Edit</a>
-                                                <button class="btn btn-danger">Delete</button>
+                                                   class="btn btn-success btn-sm">
+                                                    <i class="fas fa-fw fa-edit"></i>
+                                                    Edit
+                                                </a>
+                                                <button class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-fw fa-trash-alt"></i>
+                                                    Delete
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="d-flex">
                             <div class="col-6">
                                 <span>

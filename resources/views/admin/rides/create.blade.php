@@ -1,97 +1,113 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Add ride')
+
+@section('content_header')
+    <h1>Rides</h1>
+@endsection
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">New ride</div>
+        <form action="{{ route('admin.rides.store') }}" method="POST">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card card-outline card-primary elevation-2">
+                        <div class="card-header">
+                            <h4>Create new ride</h4>
+                        </div>
 
-                    <div class="card-body">
                         <form action="{{ route('admin.rides.store') }}" method="POST">
-                            @csrf
+                            <div class="card-body">
+                                @csrf
 
-                            <div class="form-group">
-                                <label for="route">Route</label>
-                                <select name="route_id" id="route" required
-                                        class="custom-select @error('route_id') is-invalid @enderror">
-                                    <option value="" hidden>Choose route</option>
-                                    @foreach($routes as $route)
-                                        <option
-                                            value="{{ $route->id }}" {{ old('route_id') == $route->id ? "selected" : ""}}>
-                                            {{ $route->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <div class="form-group">
+                                    <label for="route">Route</label>
+                                    <select name="route_id" id="route" required
+                                            class="custom-select @error('route_id') is-invalid @enderror">
+                                        <option value="" hidden>Choose route</option>
+                                        @foreach($routes as $route)
+                                            <option
+                                                value="{{ $route->id }}" {{ old('route_id') == $route->id ? "selected" : ""}}>
+                                                {{ $route->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
 
-                                @error('route_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="bus">Bus</label>
-                                <select name="bus_id" id="bus" required
-                                        class="custom-select @error('bus_id') is-invalid @enderror">
-                                    <option value="" hidden>Choose bus</option>
-                                    @foreach($buses as $bus)
-                                        <option value="{{ $bus->id }}" {{ old('bus_id') == $bus->id ? "selected" : ""}}>
-                                            {{ $bus->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-
-                                @error('bus_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label for="departure-time">Departure time</label>
-                                <input type="time" class="form-control @error('bus_id') is-invalid @enderror" required
-                                       name="departure_time" id="departure-time" value="{{ old('departure_time') }}">
-
-                                @error('departure_time')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group text-center">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ride_type" id="ride-type-single"
-                                           value="single" {{ ! old('ride_type') || old('ride_type') == 'single' ? "checked" : "" }}>
-                                    <label class="form-check-label" for="ride-type-single">
-                                        Single ride
-                                    </label>
+                                    @error('route_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ride_type" id="ride-type-cyclic"
-                                           value="cyclic" {{ old('ride_type') == 'cyclic' ? "checked" : "" }}>
-                                    <label class="form-check-label" for="ride-type-cyclic">
-                                        Cyclic ride
-                                    </label>
+                                <div class="form-group">
+                                    <label for="bus">Bus</label>
+                                    <select name="bus_id" id="bus" required
+                                            class="custom-select @error('bus_id') is-invalid @enderror">
+                                        <option value="" hidden>Choose bus</option>
+                                        @foreach($buses as $bus)
+                                            <option
+                                                value="{{ $bus->id }}" {{ old('bus_id') == $bus->id ? "selected" : ""}}>
+                                                {{ $bus->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('bus_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
-                                @error('ride_type')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                                <div class="form-group">
+                                    <label for="departure-time">Departure time</label>
+                                    <input type="time" class="form-control @error('bus_id') is-invalid @enderror"
+                                           required
+                                           name="departure_time" id="departure-time"
+                                           value="{{ old('departure_time') }}">
 
-                            <div class="row">
-                                <div class="col-sm-6">
+                                    @error('departure_time')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group text-center mt-4">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="ride_type"
+                                               id="ride-type-single"
+                                               value="single" {{ ! old('ride_type') || old('ride_type') == 'single' ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="ride-type-single">
+                                            Single ride
+                                        </label>
+                                    </div>
+
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input class="custom-control-input" type="radio" name="ride_type"
+                                               id="ride-type-cyclic"
+                                               value="cyclic" {{ old('ride_type') == 'cyclic' ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="ride-type-cyclic">
+                                            Cyclic ride
+                                        </label>
+                                    </div>
+
+                                    @error('ride_type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div id="singleRideInputsWrapper"
+                                     style="display: {{ ! old('ride_type') || old('ride_type') == 'single' ? "block" : "none" }}">
                                     <div class="form-group">
                                         <label for="ride-date">Ride date</label>
-                                        <input type="date" class="form-control @error('ride_date') is-invalid @enderror"
-                                               name="ride_date" id="ride-date" value="{{ old('ride_date') }}" required
+                                        <input type="date"
+                                               class="form-control @error('ride_date') is-invalid @enderror"
+                                               name="ride_date" id="ride-date" value="{{ old('ride_date') }}"
+                                               required
                                             {{ old('ride_type') == 'cyclic' ? "disabled" : "" }}>
 
                                         @error('ride_date')
@@ -102,7 +118,8 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-6">
+                                <div id="cyclicRideInputsWrapper"
+                                     style="display: {{ old('ride_type') == 'cyclic' ? "block" : "none" }}">
                                     <div class="form-group">
                                         @foreach($days as $day)
                                             <div class="custom-control custom-switch">
@@ -140,7 +157,8 @@
 
                                     <div class="form-group">
                                         <label for="end-date">End date</label>
-                                        <input type="date" class="form-control @error('end_date') is-invalid @enderror"
+                                        <input type="date"
+                                               class="form-control @error('end_date') is-invalid @enderror"
                                                name="end_date" id="end-date" value="{{ old('end_date') }}"
                                             {{ ! old('ride_type') || old('ride_type') == 'single' ? "disabled" : "" }}>
                                         <small class="form-text text-muted">
@@ -156,14 +174,17 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">
-                                Create
-                            </button>
-
+                            <div class="card-footer row justify-content-center">
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        Create
+                                    </button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 @endsection

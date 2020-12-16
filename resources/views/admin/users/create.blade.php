@@ -1,14 +1,22 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Add user')
+
+@section('content_header')
+    <h1>Users</h1>
+@endsection
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">New user</div>
+            <div class="col-md-6">
+                <div class="card card-outline card-primary elevation-2">
+                    <div class="card-header">
+                        <h4>Create new user</h4>
+                    </div>
 
-                    <div class="card-body">
-                        <form action="{{ route('admin.users.store') }}" method="POST">
+                    <form action="{{ route('admin.users.store') }}" method="POST">
+                        <div class="card-body">
                             @csrf
 
                             <div class="form-group">
@@ -83,13 +91,15 @@
                                     </span>
                                 @enderror
                             </div>
-
-                            <button type="submit" class="btn btn-primary">
-                                Create
-                            </button>
-
-                        </form>
-                    </div>
+                        </div>
+                        <div class="card-footer row justify-content-center">
+                            <div class="col-5">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    Create
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,23 +1,33 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Users')
+
+@section('content_header')
+    <h1>Users</h1>
+@endsection
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="card-header">Users list</div>
+            <div class="col-12">
+                <div class="card card-outline card-indigo elevation-2">
+                    <div class="card-header">
+                        <h4>Users manager</h4>
+                    </div>
 
                     <div class="card-body">
                         @include('flash::message')
 
                         @can('create', App\User::class)
-                            <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">
+                            <a href="{{ route('admin.users.create') }}" class="btn btn-dark mb-3">
+                                <i class="fas fa-fw fa-plus"></i>
                                 Add user
                             </a>
                         @endcan
 
-                        <table class="table">
-                            <thead>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Id</th>
                                     <th scope="col">First name</th>
@@ -33,8 +43,8 @@
                                         @php $canUpdateOrDelete = false; @endphp
                                     @endcan
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 @foreach ($users as $user)
                                     <tr>
                                         <th scope="row">{{ $user->id }}</th>
@@ -47,22 +57,30 @@
                                             {{ $user->roles->pluck('name')->implode(', ') }}
                                         </td>
                                         @if($canUpdateOrDelete)
-                                                <td>
-                                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <a href="{{ route('admin.users.edit', $user) }}"
-                                                           class="btn btn-sm btn-success">Edit</a>
-                                                            @if(Auth::user()->id != $user->id)
-                                                                <button class="btn btn-sm btn-danger">Delete</button>
-                                                            @endif
-                                                    </form>
-                                                </td>
+                                            <td>
+                                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a href="{{ route('admin.users.edit', $user) }}"
+                                                       class="btn btn-sm btn-success">
+                                                        <i class="fas fa-fw fa-edit"></i>
+                                                        Edit
+                                                    </a>
+                                                    @if(Auth::user()->id != $user->id)
+                                                        <button class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-fw fa-trash-alt"></i>
+                                                            Delete
+                                                        </button>
+                                                    @endif
+                                                </form>
+                                            </td>
                                         @endif
                                     </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="d-flex">
                             <div class="col-6">
                                 <span>
@@ -79,3 +97,5 @@
         </div>
     </div>
 @endsection
+
+

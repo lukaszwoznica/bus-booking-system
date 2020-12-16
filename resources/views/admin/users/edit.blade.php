@@ -1,14 +1,22 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Edit user')
+
+@section('content_header')
+    <h1>Users</h1>
+@endsection
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Edit user: {{ $user->getFullName() }}</div>
+            <div class="col-md-6">
+                <div class="card card-outline card-primary elevation-2">
+                    <div class="card-header">
+                        <h4>Edit user</h4>
+                    </div>
 
-                    <div class="card-body">
-                        <form action="{{ route('admin.users.update', $user) }}" method="POST">
+                    <form action="{{ route('admin.users.update', $user) }}" method="POST">
+                        <div class="card-body">
                             @csrf
                             @method('PUT')
 
@@ -72,7 +80,7 @@
                                         <input type="checkbox" name="roles[]" value="{{ $role->id }}"
                                                id="{{ "$role->name-role" }}"
                                                class="custom-control-input @error('roles') is-invalid @enderror"
-                                                {{ $user->hasRole($role->name) ? 'checked': '' }}>
+                                            {{ $user->hasRole($role->name) ? 'checked': '' }}>
                                         <label class="custom-control-label" for="{{ "$role->name-role" }}">
                                             {{ $role->name }}
                                         </label>
@@ -85,13 +93,15 @@
                                     </span>
                                 @enderror
                             </div>
-
-                            <button type="submit" class="btn btn-primary">
-                                Create
-                            </button>
-
-                        </form>
-                    </div>
+                        </div>
+                        <div class="card-footer row justify-content-center">
+                            <div class="col-5">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
