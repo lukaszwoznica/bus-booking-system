@@ -19,7 +19,7 @@ class Route extends Model
 
     public function rides()
     {
-        return $this->hasMany('App/Ride');
+        return $this->hasMany('App\Ride');
     }
 
     public function getTravelDuration()

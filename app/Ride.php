@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Ride extends Model
@@ -36,6 +38,21 @@ class Ride extends Model
 
     public function isCyclic()
     {
-        return ! isset($this->attributes['ride_date']);
+        return !isset($this->attributes['ride_date']);
+    }
+
+    public function scopeActive(Builder $query)
+    {
+        $query->where('ride_date', '>', Carbon::today())
+            ->orWhere(function (Builder $query) {
+                $query->where('ride_date', Carbon::today())
+                    ->where('departure_time', '>', Carbon::now()->toTimeString());
+            })->orWhereHas('schedule', function (Builder $query) {
+                $query->where('end_date', '>', Carbon::today())
+                    ->orWhere(function (Builder $query) {
+                        $query->where('end_date', Carbon::today())
+                            ->where('departure_time', '>', Carbon::now()->toTimeString());
+                    })->orWhereNull('end_date');
+            });
     }
 }

@@ -2,14 +2,92 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Booking;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Ride;
+use App\Route;
+use App\Services\BookingService;
+use App\User;
 
 class DashboardController extends Controller
 {
+    private BookingService $bookingService;
+
+    public function __construct(BookingService $bookingService)
+    {
+        $this->bookingService = $bookingService;
+    }
+
     public function index()
     {
-        return view('admin.dashboard');
+        $newBookings = Booking::processing()->count();
+        $activeRides = Ride::active()->count();
+        $totalRoutes = Route::all()->count();
+        $registeredUsers = User::all()->count();
+
+        $bookingsByMonthData = $this->getBookingsByMonthChartData();
+        $ridesByRouteData = $this->getRoutesWithMostRidesChartData();
+
+        return view('admin.dashboard', compact('bookingsByMonthData', 'ridesByRouteData',
+            'newBookings', 'activeRides', 'totalRoutes', 'registeredUsers'));
+    }
+
+    private function getBookingsByMonthChartData(): array
+    {
+        $bookingsCountData = $this->bookingService->lastMonthsCount(6);
+        $labels = $data = [];
+
+        foreach ($bookingsCountData as $month => $count) {
+            $labels[] = $month;
+            $data[] = $count;
+        }
+
+        $chartData['labels'] = $labels;
+        $chartData['datasets'] = [[
+            'label' => 'Bookings',
+            'backgroundColor' => 'rgba(102, 16, 242, 0.6)',
+            'hoverBackgroundColor' => 'rgba(102, 16, 242, 0.75)',
+            'borderWidth' => 1,
+            'borderColor' => 'rgba(102, 16, 242, 0.8)',
+            'hoverBorderColor' => 'rgba(102, 16, 242, 1)',
+            'data' => $data
+        ]];
+
+        return $chartData;
+    }
+
+    private function getRoutesWithMostRidesChartData(): array
+    {
+        $routes = Route::withCount(['rides' => fn($query) => $query->active()])
+            ->having('rides_count', '>', 0)
+            ->orderByDesc('rides_count')
+            ->limit(10)
+            ->get();
+
+        $labels = $data = [];
+
+        $routes->each(function ($route) use (&$labels, &$data) {
+            $labels[] = $route->id . '. ' . $route->name;
+            $data[] = $route->rides_count;
+        });
+
+        $chartData['labels'] = $labels;
+        $chartData['datasets'] = [[
+            'data' => $data,
+            'backgroundColor' => [
+                'rgba(103, 183, 220, 0.9)',
+                'rgba(103, 148, 220, 0.9)',
+                'rgba(103, 113, 220, 0.9)',
+                'rgba(128, 103, 220, 0.9)',
+                'rgba(163, 103, 220, 0.9)',
+                'rgba(199, 103, 220, 0.9)',
+                'rgba(220, 103, 206, 0.9)',
+                'rgba(220, 103, 171, 0.9)',
+                'rgba(220, 103, 136, 0.9)',
+                'rgba(220, 103, 112, 0.9)',
+            ]
+        ]];
+
+        return $chartData;
     }
 }

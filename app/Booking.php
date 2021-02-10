@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Booking extends Model
 {
@@ -75,5 +76,10 @@ class Booking extends Model
         return $this->ride->departure_time
             ->addMinutes($minutesFromDept)
             ->format('H:i');
+    }
+
+    public function scopeProcessing(Builder $query)
+    {
+        return $query->where('status', BookingStatus::PROCESSING);
     }
 }

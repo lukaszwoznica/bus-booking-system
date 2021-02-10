@@ -23,6 +23,8 @@ import Swal from 'sweetalert2';
 
 Vue.component('route-locations-inputs', require('./components/RouteLocationsInputs.vue').default);
 Vue.component('autocomplete-input', require('./components/AutocompleteInput.vue').default);
+Vue.component('bar-chart', require('./components/BarChart').default);
+Vue.component('doughnut-chart', require('./components/DoughnutChart').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

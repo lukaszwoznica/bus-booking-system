@@ -28,3 +28,19 @@
         }
     }
 }
+
+.info-box {
+    transition: $transition-base;
+
+    .info-box-icon {
+        transition: $transition-base;
+    }
+
+    &:hover {
+        background-color: darken(#fff, 5%);
+
+        .info-box-icon {
+            font-size: 2.3rem;
+        }
+    }
+}

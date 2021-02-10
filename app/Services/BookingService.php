@@ -101,4 +101,32 @@ class BookingService
                 });
             })->sum('seats');
     }
+
+    public function lastMonthsCount(int $months): array
+    {
+        $lastFiveMonths = collect();
+        $lastFiveMonthsBookingsCount = [];
+
+        for ($i = $months - 1; $i >= 0; $i--) {
+            $date = Carbon::now()->subMonths($i);
+            $lastFiveMonths->push([
+                'month' => $date->month,
+                'year' => $date->year,
+                'monthName' => $date->monthName
+            ]);
+        }
+
+        $lastFiveMonths->each(function ($item) use (&$lastFiveMonthsBookingsCount) {
+           $lastFiveMonthsBookingsCount[$item['monthName']] = $this->countInMonth($item['month'], $item['year']);
+        });
+
+        return $lastFiveMonthsBookingsCount;
+    }
+
+    public function countInMonth(int $month, int $year): int
+    {
+        return Booking::whereMonth('created_at', $month)
+            ->whereYear('created_at', $year)
+            ->count();
+    }
 }
