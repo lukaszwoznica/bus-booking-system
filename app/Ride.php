@@ -55,4 +55,41 @@ class Ride extends Model
                     })->orWhereNull('end_date');
             });
     }
+
+    public function isActive(): bool
+    {
+        return ($this->ride_date > Carbon::today()
+            || ($this->ride_date == Carbon::today() && $this->departure_time > Carbon::now())
+            || ($this->isCyclic() && (
+                    $this->schedule->end_date > Carbon::today()
+                    || is_null($this->schedule->end_date)
+                    || ($this->schedule->end_date == Carbon::today() && $this->departure_time > Carbon::now())
+                )
+            ));
+    }
+
+    public function getRunningDaysAttribute(): array
+    {
+        return collect(Carbon::getDays())
+            ->reject(fn($day) => $this->schedule->attributes[strtolower($day)] == 0)
+            ->toArray();
+    }
+
+    /**
+     * Returns arrival time to the provided location.
+     * If location not specified function returns arrival time to last location in the route.
+     *
+     * @param int|null $locationId
+     * @return string
+     */
+    public function getArrivalTimeToLocation(int $locationId = null): string
+    {
+        $location = is_null($locationId)
+            ? $this->route->locations->last()
+            : $this->route->locations->firstWhere('id', $locationId);
+
+        return $this->departure_time
+            ->addMinutes($location->pivot->minutes_from_departure)
+            ->format('H:i');
+    }
 }

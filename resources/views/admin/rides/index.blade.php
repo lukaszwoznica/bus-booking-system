@@ -42,7 +42,7 @@
                                         <th scope="row">{{ $ride->id }}</th>
                                         <td>{{ $ride->route->name }}</td>
                                         <td>{{ $ride->bus->name }}</td>
-                                        <td>{{ $ride->departure_time->format('H:i' )}}</td>
+                                        <td>{{ $ride->departure_time->format('H:i') }}</td>
                                         <td>
                                             {{ $ride->ride_date ? 'Single' : 'Cyclic' }}
                                         </td>
@@ -54,6 +54,11 @@
                                             id="{{ "delete{$ride->id}" }}">
                                                 @csrf
                                                 @method('DELETE')
+                                                <a href="{{ route('admin.rides.show', $ride) }}"
+                                                   class="btn btn-secondary btn-sm">
+                                                    <i class="fas fa-fw fa-eye"></i>
+                                                    View
+                                                </a>
                                                 <a href="{{ route('admin.rides.edit', $ride) }}"
                                                    class="btn btn-success btn-sm">
                                                     <i class="fas fa-fw fa-edit"></i>

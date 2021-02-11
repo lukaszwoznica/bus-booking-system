@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Ride\RideRequest;
 use App\Ride;
 use App\Route;
+use function Ramsey\Uuid\v1;
 
 class RideController extends Controller
 {
@@ -50,7 +51,7 @@ class RideController extends Controller
 
     public function show(Ride $ride)
     {
-        //
+        return view('admin.rides.show', compact('ride'));
     }
 
     public function edit(Ride $ride)
