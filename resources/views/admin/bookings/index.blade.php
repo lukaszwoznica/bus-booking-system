@@ -46,7 +46,7 @@
                                         <td>{{ ucwords($booking->status) }}</td>
                                         <td>
                                             <form action="{{ route('admin.bookings.destroy', $booking) }}"
-                                                  method="POST">
+                                                  method="POST" id="{{ "delete{$booking->id}" }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a href="{{ route('admin.bookings.edit', $booking) }}"
@@ -54,10 +54,8 @@
                                                     <i class="fas fa-fw fa-edit"></i>
                                                     Update status
                                                 </a>
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="fas fa-fw fa-trash-alt"></i>
-                                                    Delete
-                                                </button>
+                                                <delete-button form_id='{{ "delete{$booking->id}" }}' item_name='booking'>
+                                                </delete-button>
                                             </form>
                                         </td>
                                     </tr>

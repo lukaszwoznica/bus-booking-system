@@ -50,7 +50,8 @@
                                             {{ $ride->ride_date ? $ride->ride_date->format('d.m.Y') : '-' }}
                                         </td>
                                         <td>
-                                            <form action="{{ route('admin.rides.destroy', $ride) }}" method="POST">
+                                            <form action="{{ route('admin.rides.destroy', $ride) }}" method="POST"
+                                            id="{{ "delete{$ride->id}" }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a href="{{ route('admin.rides.edit', $ride) }}"
@@ -58,10 +59,8 @@
                                                     <i class="fas fa-fw fa-edit"></i>
                                                     Edit
                                                 </a>
-                                                <button class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-fw fa-trash-alt"></i>
-                                                    Delete
-                                                </button>
+                                                <delete-button form_id='{{ "delete{$ride->id}" }}' item_name='ride'>
+                                                </delete-button>
                                             </form>
                                         </td>
                                     </tr>

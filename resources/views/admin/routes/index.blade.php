@@ -46,7 +46,8 @@
                                             {{ $route->getTravelDuration() }}
                                         </td>
                                         <td>
-                                            <form action="{{ route('admin.routes.destroy', $route) }}" method="POST">
+                                            <form action="{{ route('admin.routes.destroy', $route) }}" method="POST"
+                                                  id="{{ "delete{$route->id}" }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a href="{{ route('admin.routes.show', $route) }}"
@@ -59,10 +60,8 @@
                                                     <i class="fas fa-fw fa-edit"></i>
                                                     Edit
                                                 </a>
-                                                <button class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-fw fa-trash-alt"></i>
-                                                    Delete
-                                                </button>
+                                                <delete-button form_id='{{ "delete{$route->id}" }}' item_name='route'>
+                                                </delete-button>
                                             </form>
                                         </td>
                                     </tr>

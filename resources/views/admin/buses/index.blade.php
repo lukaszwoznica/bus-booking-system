@@ -16,13 +16,10 @@
                     </div>
 
                     <div class="card-body">
-                        @include('flash::message')
-
                         <a href="{{ route('admin.buses.create') }}" class="btn btn-dark mb-3">
                             <i class="fas fa-fw fa-plus"></i>
                             Add bus
                         </a>
-
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead class="thead-light">
@@ -40,7 +37,8 @@
                                         <td>{{ $bus->name }}</td>
                                         <td>{{ $bus->seats }}</td>
                                         <td>
-                                            <form action="{{ route('admin.buses.destroy', $bus) }}" method="POST">
+                                            <form action="{{ route('admin.buses.destroy', $bus) }}" method="POST"
+                                                  id="{{ "delete{$bus->id}" }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a href="{{ route('admin.buses.edit', $bus) }}"
@@ -48,10 +46,8 @@
                                                     <i class="fas fa-fw fa-edit"></i>
                                                     Edit
                                                 </a>
-                                                <button class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-fw fa-trash-alt"></i>
-                                                    Delete
-                                                </button>
+                                                <delete-button form_id='{{ "delete{$bus->id}" }}' item_name='bus'>
+                                                </delete-button>
                                             </form>
                                         </td>
                                     </tr>

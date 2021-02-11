@@ -58,7 +58,8 @@
                                         </td>
                                         @if($canUpdateOrDelete)
                                             <td>
-                                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
+                                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
+                                                      id="{{ "delete{$user->id}" }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <a href="{{ route('admin.users.edit', $user) }}"
@@ -67,10 +68,8 @@
                                                         Edit
                                                     </a>
                                                     @if(Auth::user()->id != $user->id)
-                                                        <button class="btn btn-sm btn-danger">
-                                                            <i class="fas fa-fw fa-trash-alt"></i>
-                                                            Delete
-                                                        </button>
+                                                        <delete-button form_id='{{ "delete{$user->id}" }}' item_name='user'>
+                                                        </delete-button>
                                                     @endif
                                                 </form>
                                             </td>

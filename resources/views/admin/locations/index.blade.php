@@ -39,7 +39,7 @@
                                         <td>{{ $location->name }}</td>
                                         <td>
                                             <form action="{{ route('admin.locations.destroy', $location) }}"
-                                                  method="POST">
+                                                  id="{{ "delete{$location->id}" }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <a href="{{ route('admin.locations.edit', $location) }}"
@@ -47,10 +47,8 @@
                                                     <i class="fas fa-fw fa-edit"></i>
                                                     Edit
                                                 </a>
-                                                <button class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-fw fa-trash-alt"></i>
-                                                    Delete
-                                                </button>
+                                                <delete-button form_id='{{ "delete{$location->id}" }}' item_name='location'>
+                                                </delete-button>
                                             </form>
                                         </td>
                                     </tr>
