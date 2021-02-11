@@ -8,7 +8,6 @@ require('./bootstrap');
 require('./scripts/toggleRideFormInputs')
 
 window.Vue = require('vue');
-import Swal from 'sweetalert2';
 
 /**
  * The following block of code may be used to automatically register your

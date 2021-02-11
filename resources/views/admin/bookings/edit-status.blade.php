@@ -16,12 +16,6 @@
                     </div>
                     <form action="{{ route('admin.bookings.update', $booking) }}" method="POST">
                         <div class="card-body">
-                            @error('seats')
-                            <div class="alert alert-danger" role="alert">
-                                {{ $message }}
-                            </div>
-                            @enderror
-
                             @csrf
                             @method('PATCH')
 

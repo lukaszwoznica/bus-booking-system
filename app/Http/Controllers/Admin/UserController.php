@@ -41,9 +41,8 @@ class UserController extends Controller
         $user->roles()->attach($requestData['roles']);
         $user->markEmailAsVerified();
 
-        flash('The user has been successfully created.')->success();
-
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')
+            ->withToastSuccess('The user has been successfully created!');
     }
 
     public function edit(User $user)
@@ -66,20 +65,20 @@ class UserController extends Controller
         $user->update($requestData);
         $user->roles()->sync($requestData['roles']);
 
-        flash('The user has been successfully updated.')->success();
-
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')
+            ->withToastSuccess('The user has been successfully updated!');
     }
 
     public function destroy(User $user)
     {
         try {
             $user->delete();
-            flash('The user has been successfully deleted.')->success();
         } catch (\Exception $e) {
-            flash('An error occurred while deleting the user.')->error();
+            return redirect()->route('admin.users.index')
+                ->withToastError('An error occurred while deleting the user.');
         }
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')
+            ->withToastSuccess('The user has been successfully deleted!');
     }
 }

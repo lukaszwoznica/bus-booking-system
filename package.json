@@ -30,8 +30,6 @@
         "chart.js": "^2.9.4",
         "icheck-bootstrap": "^3.0.1",
         "overlayscrollbars": "^1.13.0",
-        "sweetalert": "^2.1.2",
-        "sweetalert2": "^10.12.5",
         "vue-chartjs": "^3.5.1"
     }
 }

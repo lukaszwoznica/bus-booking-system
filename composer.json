@@ -17,7 +17,8 @@
         "laracasts/flash": "^3.2",
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.1"
+        "laravel/ui": "^2.1",
+        "realrashid/sweet-alert": "^3.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

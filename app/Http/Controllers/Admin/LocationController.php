@@ -24,9 +24,8 @@ class LocationController extends Controller
     {
         Location::create($request->validated());
 
-        session()->flash('status', 'The location has been successfully created.');
-
-        return redirect()->route('admin.locations.index');
+        return redirect()->route('admin.locations.index')
+            ->withToastSuccess('The location has been successfully created!');
     }
 
     public function edit(Location $location)
@@ -38,20 +37,20 @@ class LocationController extends Controller
     {
         $location->update($request->validated());
 
-        session()->flash('status', 'The location has been successfully updated.');
-
-        return redirect()->route('admin.locations.index');
+        return redirect()->route('admin.locations.index')
+            ->withToastSuccess('The location has been successfully updated!');
     }
 
     public function destroy(Location $location)
     {
         try {
             $location->delete();
-            session()->flash('status', 'The location has been successfully deleted.');
         } catch (\Exception $e) {
-            session()->flash('status', 'An error occurred while deleting the locality.');
+            return redirect()->route('admin.locations.index')
+                ->withToastError('An error occurred while deleting the location.');
         }
 
-        return redirect()->route('admin.locations.index');
+        return redirect()->route('admin.locations.index')
+            ->withToastSuccess('The location has been successfully deleted!');
     }
 }

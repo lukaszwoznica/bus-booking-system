@@ -30,17 +30,15 @@ class RouteController extends Controller
     {
         $route = Route::create($request->validated());
 
-        collect($request->locations)
-            ->each(function ($location, $order) use ($route) {
-                $route->locations()->attach($location['id'], [
-                    'order' => $order,
-                    'minutes_from_departure' => $location['minutes'] ?? 0
-                ]);
-            });
+        collect($request->locations)->each(function ($location, $order) use ($route) {
+            $route->locations()->attach($location['id'], [
+                'order' => $order,
+                'minutes_from_departure' => $location['minutes'] ?? 0
+            ]);
+        });
 
-        session()->flash('status', 'The route has been successfully created.');
-
-        return redirect()->route('admin.routes.index');
+        return redirect()->route('admin.routes.index')
+            ->withToastSuccess('The route has been successfully created!');
     }
 
     public function show(Route $route)
@@ -66,28 +64,27 @@ class RouteController extends Controller
         $route->update($request->validated());
 
         $route->locations()->detach();
-        collect($request->locations)
-            ->each(function ($location, $order) use ($route) {
-                $route->locations()->attach($location['id'], [
-                    'order' => $order,
-                    'minutes_from_departure' => $location['minutes'] ?? 0
-                ]);
-            });
+        collect($request->locations)->each(function ($location, $order) use ($route) {
+            $route->locations()->attach($location['id'], [
+                'order' => $order,
+                'minutes_from_departure' => $location['minutes'] ?? 0
+            ]);
+        });
 
-        session()->flash('status', 'The route has been successfully updated.');
-
-        return redirect()->route('admin.routes.index');
+        return redirect()->route('admin.routes.index')
+            ->withToastSuccess('The route has been successfully updated!');
     }
 
     public function destroy(Route $route)
     {
         try {
             $route->delete();
-            session()->flash('status', 'The route has been successfully deleted.');
         } catch (\Exception $e) {
-            session()->flash('status', 'An error occurred while deleting the route.');
+            return redirect()->route('admin.routes.index')
+                ->withToastError('An error occurred while deleting the route.');
         }
 
-        return redirect()->route('admin.routes.index');
+        return redirect()->route('admin.routes.index')
+            ->withToastSuccess('The route has been successfully deleted!');
     }
 }

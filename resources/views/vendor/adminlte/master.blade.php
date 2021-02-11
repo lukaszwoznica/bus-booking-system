@@ -79,20 +79,6 @@
     {{-- Body Content --}}
     @yield('body')
 
-    {{-- Base Scripts --}}
-    @if(!config('adminlte.enabled_laravel_mix'))
-        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-
-        {{-- Configured Scripts --}}
-        @include('adminlte::plugins', ['type' => 'js'])
-
-        <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
-    @else
-        <script src="{{ mix(config('adminlte.laravel_mix_js_path', 'js/app.js')) }}"></script>
-    @endif
-
     {{-- Livewire Script --}}
     @if(config('adminlte.livewire'))
         @if(app()->version() >= 7)
@@ -101,10 +87,30 @@
             <livewire:scripts />
         @endif
     @endif
-
-    {{-- Custom Scripts --}}
-    @yield('adminlte_js')
 </div>
+
+{{-- Base Scripts --}}
+@if(!config('adminlte.enabled_laravel_mix'))
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+
+    {{-- Configured Scripts --}}
+    @include('adminlte::plugins', ['type' => 'js'])
+
+    <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+@else
+    <script src="{{ mix(config('adminlte.laravel_mix_js_path', 'js/app.js')) }}"></script>
+@endif
+
+{{-- SweetAlert --}}
+@include('sweetalert::alert')
+
+{{-- Custom Scripts --}}
+@yield('adminlte_js')
+
+
+
 </body>
 
 </html>

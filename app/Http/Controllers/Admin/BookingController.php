@@ -30,10 +30,12 @@ class BookingController extends Controller
     public function edit(Booking $booking)
     {
         $bookingStatuses = BookingStatus::getKeys();
-        $bookedSeats = $this->bookingService->getBookedSeatsSum($booking->ride,
+        $bookedSeats = $this->bookingService->getBookedSeatsSum(
+            $booking->ride,
             $booking->startLocation->id,
             $booking->endLocation->id,
-            $booking->travel_date->toDateString());
+            $booking->travel_date->toDateString()
+        );
         $availableSeats = $booking->ride->bus->seats - $bookedSeats;
 
         return view('admin.bookings.edit-status', compact('booking', 'bookingStatuses', 'availableSeats'));
@@ -44,26 +46,23 @@ class BookingController extends Controller
         try {
             $this->bookingService->updateStatus($booking, $request->validated()['status']);
         } catch (NotEnoughSeatsAvailableException $e) {
-            $errors['seats'] = $e->getMessage();
-
-            return redirect()->back()
-                ->withErrors($errors);
+            return redirect()->back()->withToastError($e->getMessage());
         }
 
-        session()->flash('status', 'The booking status has been successfully updated.');
-
-        return redirect()->route('admin.bookings.index');
+        return redirect()->route('admin.bookings.index')
+            ->withToastSuccess('The booking status has been successfully updated!');
     }
 
     public function destroy(Booking $booking)
     {
         try {
             $booking->delete();
-            session()->flash('status', 'The booking has been successfully deleted.');
         } catch (\Exception $e) {
-            session()->flash('status', 'An error occurred while deleting the booking.');
+            return redirect()->route('admin.bookings.index')
+                ->withToastError('An error occurred while deleting the booking.');
         }
 
-        return redirect()->route('admin.bookings.index');
+        return redirect()->route('admin.bookings.index')
+            ->withToastSuccess('The booking has been successfully deleted!');
     }
 }

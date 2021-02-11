@@ -24,9 +24,8 @@ class BusController extends Controller
     {
         Bus::create($request->validated());
 
-        session()->flash('status', 'The bus has been successfully created.');
-
-        return redirect()->route('admin.buses.index');
+        return redirect()->route('admin.buses.index')
+            ->withToastSuccess('The bus has been successfully created!');
     }
 
     public function edit(Bus $bus)
@@ -38,20 +37,20 @@ class BusController extends Controller
     {
         $bus->update($request->validated());
 
-        session()->flash('status', 'The bus has been successfully updated.');
-
-        return redirect()->route('admin.buses.index');
+        return redirect()->route('admin.buses.index')
+            ->withToastSuccess('The bus has been successfully updated!');
     }
 
     public function destroy(Bus $bus)
     {
         try {
             $bus->delete();
-            session()->flash('status', 'The bus has been successfully deleted.');
         } catch (\Exception $e) {
-            session()->flash('status', 'An error occurred while deleting the bus.');
+            return redirect()->route('admin.buses.index')
+                ->withToastError('An error occurred while deleting the bus.');
         }
 
-        return redirect()->route('admin.buses.index');
+        return redirect()->route('admin.buses.index')
+            ->withToastSuccess('The bus has been successfully deleted!');
     }
 }
