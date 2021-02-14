@@ -65,7 +65,7 @@ class BookingService
             'status' => $status
         ]);
 
-        if ($status != BookingStatus::PROCESSING) {
+        if ($status != BookingStatus::NEW) {
             event(new BookingStatusChanged($booking));
         }
     }

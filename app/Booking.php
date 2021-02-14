@@ -13,7 +13,7 @@ class Booking extends Model
     ];
 
     protected $attributes = [
-        'status' => BookingStatus::PROCESSING
+        'status' => BookingStatus::NEW
     ];
 
     protected $dates = [
@@ -78,8 +78,8 @@ class Booking extends Model
             ->format('H:i');
     }
 
-    public function scopeProcessing(Builder $query)
+    public function scopeNew(Builder $query)
     {
-        return $query->where('status', BookingStatus::PROCESSING);
+        return $query->where('status', BookingStatus::NEW);
     }
 }

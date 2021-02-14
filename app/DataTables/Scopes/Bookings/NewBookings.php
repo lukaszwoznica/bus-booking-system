@@ -5,7 +5,7 @@ namespace App\DataTables\Scopes\Bookings;
 use App\BookingStatus;
 use Yajra\DataTables\Contracts\DataTableScope;
 
-class ProcessingBookings implements DataTableScope
+class NewBookings implements DataTableScope
 {
     /**
      * Apply a query scope.
@@ -15,6 +15,6 @@ class ProcessingBookings implements DataTableScope
      */
     public function apply($query)
     {
-         return $query->where('status', BookingStatus::PROCESSING);
+         return $query->where('status', BookingStatus::NEW);
     }
 }

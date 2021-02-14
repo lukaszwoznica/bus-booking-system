@@ -20,7 +20,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $newBookings = Booking::processing()->count();
+        $newBookings = Booking::new()->count();
         $activeRides = Ride::active()->count();
         $totalRoutes = Route::all()->count();
         $registeredUsers = User::all()->count();
