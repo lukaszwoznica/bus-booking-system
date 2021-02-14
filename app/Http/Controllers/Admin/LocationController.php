@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\LocationsDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Location\LocationRequest;
 use App\Location;
 
 class LocationController extends Controller
 {
-    public function index()
+    public function index(LocationsDataTable $dataTable)
     {
-        $locations = Location::paginate(15);
-
-        return view('admin.locations.index', compact('locations'));
+        return $dataTable->render('admin.locations.index');
     }
 
     public function create()

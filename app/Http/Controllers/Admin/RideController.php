@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Bus;
+use App\DataTables\RidesDataTable;
+use App\DataTables\Scopes\Rides\ActiveRides;
+use App\DataTables\Scopes\Rides\InactiveRides;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Ride\RideRequest;
 use App\Ride;
 use App\Route;
-use function Ramsey\Uuid\v1;
 
 class RideController extends Controller
 {
@@ -15,11 +17,15 @@ class RideController extends Controller
         'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
     ];
 
-    public function index()
+    public function index(RidesDataTable $dataTable)
     {
-        $rides = Ride::with(['route', 'bus'])->paginate(15);
+        if (request()->get('state') == 'active') {
+            $dataTable->addScope(new ActiveRides());
+        } elseif (request()->get('state') == 'inactive') {
+            $dataTable->addScope(new InactiveRides());
+        }
 
-        return view('admin.rides.index', compact('rides'));
+        return $dataTable->render('admin.rides.index');
     }
 
     public function create()

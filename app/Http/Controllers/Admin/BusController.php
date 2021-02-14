@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\BusesDataTable;
 use App\Http\Controllers\Controller;
 use App\Bus;
 use App\Http\Requests\Admin\Bus\BusRequest;
 
 class BusController extends Controller
 {
-    public function index()
+    public function index(BusesDataTable $dataTable)
     {
-        $buses = Bus::paginate(15);
-
-        return view('admin.buses.index', compact('buses'));
+        return $dataTable->render('admin.buses.index');
     }
 
     public function create()

@@ -28,9 +28,11 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.1",
         "chart.js": "^2.9.4",
+        "datatables.net-bs4": "^1.10.23",
+        "datatables.net-buttons-bs4": "^1.6.5",
         "icheck-bootstrap": "^3.0.1",
         "overlayscrollbars": "^1.13.0",
-        "vue-chartjs": "^3.5.1",
-        "vue-sweetalert2": "^4.2.0"
+        "sweetalert2": "^10.14.1",
+        "vue-chartjs": "^3.5.1"
     }
 }

@@ -9,62 +9,17 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-sm-12">
                 <div class="card card-outline card-indigo elevation-2">
                     <div class="card-header">
                         <h4>Buses manager</h4>
                     </div>
-
                     <div class="card-body">
-                        <a href="{{ route('admin.buses.create') }}" class="btn btn-dark mb-3">
-                            <i class="fas fa-fw fa-plus"></i>
-                            Add bus
+                        <a href="{{ route('admin.buses.create') }}" class="btn btn-dark mb-3 text-right">
+                            <i class="fas fa-fw fa-plus"></i> Add new bus
                         </a>
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Seats</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($buses as $bus)
-                                    <tr>
-                                        <th scope="row">{{ $bus->id }}</th>
-                                        <td>{{ $bus->name }}</td>
-                                        <td>{{ $bus->seats }}</td>
-                                        <td>
-                                            <form action="{{ route('admin.buses.destroy', $bus) }}" method="POST"
-                                                  id="{{ "delete{$bus->id}" }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a href="{{ route('admin.buses.edit', $bus) }}"
-                                                   class="btn btn-success btn-sm">
-                                                    <i class="fas fa-fw fa-edit"></i>
-                                                    Edit
-                                                </a>
-                                                <delete-button form_id='{{ "delete{$bus->id}" }}' item_name='bus'>
-                                                </delete-button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="d-flex">
-                            <div class="col-6">
-                                <span>
-                                    {{ "Showing {$buses->firstItem()} to {$buses->lastItem()} of {$buses->total()} entries"  }}
-                                </span>
-                            </div>
-                            <div class="col-6 d-flex justify-content-end">
-                                {{ $buses->links() }}
-                            </div>
+                        <div class="table-responsive mt-2">
+                            {{ $dataTable->table() }}
                         </div>
                     </div>
                 </div>
@@ -72,3 +27,7 @@
         </div>
     </div>
 @endsection
+
+@push('adminlte_js')
+    {{$dataTable->scripts()}}
+@endpush

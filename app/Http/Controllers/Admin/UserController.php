@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\PostUserRequest;
 use App\Http\Requests\Admin\User\PutUserRequest;
@@ -17,12 +18,11 @@ class UserController extends Controller
         $this->authorizeResource(User::class, 'user');
     }
 
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
-        $users = User::with('roles')->paginate(15);
         Auth::user()->load('roles');
 
-        return view('admin.users.index', compact('users'));
+        return $dataTable->render('admin.users.index');
     }
 
     public function create()

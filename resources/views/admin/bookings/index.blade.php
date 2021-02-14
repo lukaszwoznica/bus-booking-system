@@ -12,67 +12,29 @@
             <div class="col-12">
                 <div class="card card-outline card-indigo elevation-2">
                     <div class="card-header">
-                        <h4 >Bookings manager</h4>
+                        <h4>Bookings manager</h4>
                     </div>
 
                     <div class="card-body">
-                        @include('flash::message')
+                        <ul class="nav nav-tabs justify-content-center">
+                            <li class="nav-item">
+                                <a class="nav-link {{ !in_array(request()->get('status'), $bookingStatuses) ? 'active' : ''}}"
+                                   href="{{ route('admin.bookings.index') }}">
+                                    All
+                                </a>
+                            </li>
+                            @foreach($bookingStatuses as $status)
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->get('status') == $status ? 'active' : '' }}"
+                                       href="{{ route('admin.bookings.index', ['status' => $status]) }}">
+                                        {{ ucfirst($status) }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
 
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Ride</th>
-                                    <th scope="col">User</th>
-                                    <th scope="col">Travel date</th>
-                                    <th scope="col">Route</th>
-                                    <th scope="col">Seats</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($bookings as $booking)
-                                    <tr>
-                                        <th scope="row">{{ $booking->id }}</th>
-                                        <td>{{ $booking->ride->id }}</td>
-                                        <td>{{ $booking->user->getFullName() }}</td>
-                                        <td>{{ $booking->travel_date->format('d.m.Y') }}</td>
-                                        <td>
-                                            {{ "{$booking->startLocation->name} -> {$booking->endLocation->name}" }}
-                                        </td>
-                                        <td>{{ $booking->seats }}</td>
-                                        <td>{{ ucwords($booking->status) }}</td>
-                                        <td>
-                                            <form action="{{ route('admin.bookings.destroy', $booking) }}"
-                                                  method="POST" id="{{ "delete{$booking->id}" }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a href="{{ route('admin.bookings.edit', $booking) }}"
-                                                   class="btn btn-sm btn-success">
-                                                    <i class="fas fa-fw fa-edit"></i>
-                                                    Update status
-                                                </a>
-                                                <delete-button form_id='{{ "delete{$booking->id}" }}' item_name='booking'>
-                                                </delete-button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="d-flex">
-                            <div class="col-6">
-                                <span>
-                                    {{ "Showing {$bookings->firstItem()} to {$bookings->lastItem()} of {$bookings->total()} entries"  }}
-                                </span>
-                            </div>
-                            <div class="col-6 d-flex justify-content-end">
-                                {{ $bookings->links() }}
-                            </div>
+                        <div class="table-responsive mt-2">
+                            {{ $dataTable->table() }}
                         </div>
                     </div>
                 </div>
@@ -80,3 +42,7 @@
         </div>
     </div>
 @endsection
+
+@push('adminlte_js')
+    {{$dataTable->scripts()}}
+@endpush

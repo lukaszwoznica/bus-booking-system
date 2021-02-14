@@ -6,12 +6,10 @@
 
 require('./bootstrap');
 require('./scripts/toggleRideFormInputs')
+require('./scripts/deleteConfirm')
 
 window.Vue = require('vue');
-import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
 
-Vue.use(VueSweetalert2);
 
 /**
  * The following block of code may be used to automatically register your
@@ -28,7 +26,6 @@ Vue.component('route-locations-inputs', require('./components/RouteLocationsInpu
 Vue.component('autocomplete-input', require('./components/AutocompleteInput.vue').default);
 Vue.component('bar-chart', require('./components/BarChart').default);
 Vue.component('doughnut-chart', require('./components/DoughnutChart').default);
-Vue.component('delete-button', require('./components/deleteButton').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

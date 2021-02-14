@@ -44,3 +44,19 @@
         }
     }
 }
+
+div.dataTables_wrapper {
+    &:last-child div.row {
+        margin-top: 1.2rem !important;
+    }
+}
+
+table.dataTable {
+    td {
+        vertical-align: middle;
+    }
+
+    thead {
+        background-color: $light;
+    }
+}

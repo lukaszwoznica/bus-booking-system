@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Booking;
 use App\BookingStatus;
+use App\DataTables\BookingsDataTable;
 use App\Exceptions\NotEnoughSeatsAvailableException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Booking\PatchBookingRequest;
@@ -18,13 +19,17 @@ class BookingController extends Controller
         $this->bookingService = $bookingService;
     }
 
-    public function index()
+    public function index(BookingsDataTable $dataTable)
     {
-        $bookings = Booking::with('ride', 'startLocation', 'endLocation', 'user')
-            ->latest()
-            ->paginate(15);
+        $bookingStatuses = array_map(fn($key) => strtolower($key), BookingStatus::getKeys());
+        $status = request()->get('status');
+        if (in_array($status, $bookingStatuses)) {
+            $namespace = '\\App\DataTables\Scopes\Bookings\\';
+            $scopeClass = $namespace . ucfirst($status) . 'Bookings';
+            $dataTable->addScope(new $scopeClass());
+        }
 
-        return view('admin.bookings.index', compact('bookings'));
+        return $dataTable->render('admin.bookings.index', compact('bookingStatuses'));
     }
 
     public function edit(Booking $booking)

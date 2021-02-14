@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\RoutesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Route\RouteRequest;
 use App\Http\Resources\Location as LocationResource;
@@ -10,11 +11,9 @@ use App\Route;
 
 class RouteController extends Controller
 {
-    public function index()
+    public function index(RoutesDataTable $dataTable)
     {
-        $routes = Route::with('locations')->paginate(15);
-
-        return view('admin.routes.index', compact('routes'));
+        return $dataTable->render('admin.routes.index');
     }
 
     public function create()

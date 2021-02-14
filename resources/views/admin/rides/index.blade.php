@@ -16,73 +16,33 @@
                     </div>
 
                     <div class="card-body">
-                        @include('flash::message')
-
                         <a href="{{ route('admin.rides.create') }}" class="btn btn-dark mb-3">
                             <i class="fas fa-fw fa-plus"></i>
-                            Add ride
+                            Add new ride
                         </a>
 
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Id</th>
-                                    <th scope="col">Route</th>
-                                    <th scope="col">Bus</th>
-                                    <th scope="col">Departure time</th>
-                                    <th scope="col">Ride type</th>
-                                    <th scope="col">Ride date</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($rides as $ride)
-                                    <tr>
-                                        <th scope="row">{{ $ride->id }}</th>
-                                        <td>{{ $ride->route->name }}</td>
-                                        <td>{{ $ride->bus->name }}</td>
-                                        <td>{{ $ride->departure_time->format('H:i') }}</td>
-                                        <td>
-                                            {{ $ride->ride_date ? 'Single' : 'Cyclic' }}
-                                        </td>
-                                        <td>
-                                            {{ $ride->ride_date ? $ride->ride_date->format('d.m.Y') : '-' }}
-                                        </td>
-                                        <td>
-                                            <form action="{{ route('admin.rides.destroy', $ride) }}" method="POST"
-                                            id="{{ "delete{$ride->id}" }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a href="{{ route('admin.rides.show', $ride) }}"
-                                                   class="btn btn-secondary btn-sm">
-                                                    <i class="fas fa-fw fa-eye"></i>
-                                                    View
-                                                </a>
-                                                <a href="{{ route('admin.rides.edit', $ride) }}"
-                                                   class="btn btn-success btn-sm">
-                                                    <i class="fas fa-fw fa-edit"></i>
-                                                    Edit
-                                                </a>
-                                                <delete-button form_id='{{ "delete{$ride->id}" }}' item_name='ride'>
-                                                </delete-button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                        <ul class="nav nav-tabs justify-content-center">
+                            <li class="nav-item">
+                                <a class="nav-link {{ !in_array(request()->get('state'), ['active', 'inactive']) ? 'active' : ''}}"
+                                   href="{{ route('admin.rides.index') }}">
+                                    All
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->get('state') == 'active' ? 'active' : '' }}"
+                                   href="{{ route('admin.rides.index', ['state' => 'active']) }}">
+                                    Active
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->get('state') == 'inactive' ? 'active' : '' }}"
+                                   href="{{ route('admin.rides.index', ['state' => 'inactive']) }}">
+                                    Inactive</a>
+                            </li>
+                        </ul>
 
-                        <div class="d-flex">
-                            <div class="col-6">
-                                <span>
-                                    {{ "Showing {$rides->firstItem()} to {$rides->lastItem()} of {$rides->total()} entries"  }}
-                                </span>
-                            </div>
-                            <div class="col-6 d-flex justify-content-end">
-                                {{ $rides->links() }}
-                            </div>
+                        <div class="table-responsive mt-2">
+                            {{ $dataTable->table() }}
                         </div>
                     </div>
                 </div>
@@ -90,3 +50,7 @@
         </div>
     </div>
 @endsection
+
+@push('adminlte_js')
+    {{$dataTable->scripts()}}
+@endpush

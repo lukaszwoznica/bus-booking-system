@@ -106,10 +106,10 @@
 {{-- SweetAlert --}}
 @include('sweetalert::alert')
 
+<script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+
 {{-- Custom Scripts --}}
-@yield('adminlte_js')
-
-
+@stack('adminlte_js')
 
 </body>
 

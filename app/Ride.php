@@ -61,9 +61,9 @@ class Ride extends Model
         return ($this->ride_date > Carbon::today()
             || ($this->ride_date == Carbon::today() && $this->departure_time > Carbon::now())
             || ($this->isCyclic() && (
-                    $this->schedule->end_date > Carbon::today()
-                    || is_null($this->schedule->end_date)
-                    || ($this->schedule->end_date == Carbon::today() && $this->departure_time > Carbon::now())
+                    optional($this->schedule)->end_date > Carbon::today()
+                    || is_null(optional($this->schedule)->end_date)
+                    || (optional($this->schedule)->end_date == Carbon::today() && $this->departure_time > Carbon::now())
                 )
             ));
     }
