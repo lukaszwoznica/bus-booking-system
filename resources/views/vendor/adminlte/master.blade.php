@@ -108,6 +108,12 @@
 
 <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 
+<script>
+    $('table').on('draw.dt', function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
 {{-- Custom Scripts --}}
 @stack('adminlte_js')
 

@@ -18,10 +18,3 @@
         </button>
     </div>
 </form>
-
-<script defer>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
-
