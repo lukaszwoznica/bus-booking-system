@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\QueuedVerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -78,5 +79,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getFullName(): string
     {
         return "{$this->attributes['first_name']} {$this->attributes['last_name']}";
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new QueuedVerifyEmailNotification());
     }
 }

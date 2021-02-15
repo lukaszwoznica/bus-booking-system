@@ -17,6 +17,7 @@ class SendBookingStatusChangedNotification
      */
     public function handle(BookingStatusChanged $event)
     {
-        $event->booking->user->notify(new BookingStatusChangedNotification($event->booking));
+        $when = now()->addSeconds(15);
+        $event->booking->user->notify((new BookingStatusChangedNotification($event->booking))->delay($when));
     }
 }
