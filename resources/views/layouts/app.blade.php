@@ -14,17 +14,21 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md {{ request()->routeIs('home', 'login', 'register')
+                                            ? 'navbar-dark navbar-transparent'
+                                            : 'navbar-light bg-dark shadow-sm' }}">
+
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+                <i class="fas fa-fw fa-bus"></i>
+                {{ ucwords(config('app.name', 'Laravel')) }}
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -33,21 +37,14 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-
-                </ul>
-
-                <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('login') }}">Login</a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">Register</a>
                             </li>
                         @endif
                     @else
@@ -59,9 +56,9 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @isAdmin
-                                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                    {{ __('Admin panel') }}
-                                </a>
+                                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                        Admin panel
+                                    </a>
                                 @endisAdmin
 
                                 <a class="dropdown-item" href="{{ route('bookings.index') }}">
@@ -75,7 +72,7 @@
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    Logout
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -89,6 +86,15 @@
             </div>
         </div>
     </nav>
+
+    @if(request()->routeIs('home', 'login', 'register'))
+        <div class="video-background-wrapper">
+            <video src="{{ asset('videos/background.mp4') }}" muted loop autoplay
+                   poster="{{ asset('images/video-background-poster.png') }}">
+            </video>
+            <div class="overlay"></div>
+        </div>
+    @endif
 
     @yield('inactive-account-alert')
 

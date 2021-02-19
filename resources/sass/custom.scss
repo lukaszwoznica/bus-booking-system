@@ -1,0 +1,95 @@
+.navbar-transparent {
+    background: rgb(0, 0, 0);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.39827268798144255) 0%,
+        rgba(0, 0, 0, 0.7035948168329832) 50%, rgba(0, 0, 0, 1) 100%);
+
+    .nav-link {
+        color: $white !important;
+        opacity: 0.8;
+        text-align: center;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .dropdown-menu {
+        background-color: rgba(55, 55, 55, 0.9);
+
+        .dropdown-item {
+            color: $white;
+            opacity: 0.8;
+
+            &:hover {
+                background-color: transparent;
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            text-align: center;
+        }
+    }
+}
+
+header {
+    min-height: 200px;
+
+    h1 {
+        font-size: 3rem;
+    }
+}
+
+.input-group {
+    .form-control:focus {
+        box-shadow: none;
+        border-color: $border-color;
+        opacity: 1;
+    }
+
+}
+
+.video-background-wrapper {
+    video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #515151;
+        mix-blend-mode: overlay;
+        z-index: -1;
+    }
+}
+
+.card-transparent {
+    background-color: rgba(55, 55, 55, 0.65);
+
+    .form-group {
+        margin-top: 1rem;
+    }
+
+    a {
+        text-decoration: none;
+        color: $white;
+        opacity: .8;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    input[type='text'], input[type='date'], input[type='email'], input[type='password'] {
+        opacity: .9;
+    }
+}

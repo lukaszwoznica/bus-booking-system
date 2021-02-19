@@ -1,8 +1,8 @@
 // Body
-$body-bg: #f8fafc;
+$body-bg: #222222;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-sans-serif: 'Lato', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
@@ -14,6 +14,11 @@ $pink: #f66d9b;
 $red: #e3342f;
 $orange: #f6993f;
 $yellow: #ffed4a;
-$green: #38c172;
+$green: #2aae61;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+
+$primary: $green;
+
+$input-group-addon-bg: #c4c4c4;
+$input-group-addon-border-color: #c4c4c4;

@@ -1,17 +1,25 @@
 <template>
     <div class="form-group">
-        <label :for="id">{{ label }}</label>
-        <input type="text" :name="name" :id="id" class="form-control"
-               :class="{'is-invalid' : error}"
-               v-model="query"
-               :required="required"
-               @keydown.up="keyUp"
-               @keydown.down="keyDown"
-               @keydown.enter="selectItem"
-               @keydown.delete="resetSelectedItem"
-               @input="showOptions"
-               @focusout="hideOptions(100)"
-               autocomplete="off">
+        <div class="input-group">
+            <div v-if="prepend_icon" class="input-group-prepend">
+                <div class="input-group-text">
+                    <i :class="prepend_icon"></i>
+                </div>
+            </div>
+            <input type="text" :name="name" :id="id" class="form-control"
+                   :class="{'is-invalid' : error}"
+                   :placeholder="placeholder"
+                   v-model="query"
+                   :required="required"
+                   @keydown.up="keyUp"
+                   @keydown.down="keyDown"
+                   @keydown.enter="selectItem"
+                   @keydown.delete="resetSelectedItem"
+                   @input="showOptions"
+                   @focusout="hideOptions(100)"
+                   v-on:keyup.enter="$event.target.nextElementSibling.focus()"
+                   autocomplete="off">
+        </div>
 
         <div class="options-wrapper" v-show="optionsVisible && matches.length > 0">
             <ul class="options-list" ref="optionsList">
@@ -33,7 +41,7 @@
 <script>
 export default {
     props: [
-        'items', 'error', 'name', 'id', 'label', 'required', 'old'
+        'items', 'error', 'name', 'id', 'required', 'old', 'placeholder', 'prepend_icon'
     ],
 
     mounted() {
@@ -107,15 +115,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .options-wrapper {
     position: relative;
+    z-index: 999;
 }
 
 .options-list {
     position: absolute;
-    top: 3px;
+    top: 0;
     border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
     background-color: #fff;
     width: 100%;
     padding: 0;
@@ -128,7 +138,7 @@ export default {
 .options-list li {
     display: block;
     cursor: pointer;
-    padding: .4rem .7rem;
+    padding: .4rem .7rem .4rem 3rem;
 }
 
 .options-list li.selected {
