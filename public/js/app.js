@@ -104678,11 +104678,9 @@ var render = function() {
     ),
     _vm._v(" "),
     _vm.error
-      ? _c(
-          "span",
-          { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-          [_c("strong", [_vm._v(_vm._s(_vm.error))])]
-        )
+      ? _c("span", { staticClass: "text-danger", attrs: { role: "alert" } }, [
+          _c("small", [_vm._v(_vm._s(_vm.error))])
+        ])
       : _vm._e()
   ])
 }

@@ -1,3 +1,11 @@
+.bg-dark-lighter {
+    background-color: $dark-lighter;
+}
+
+.bg-dark-lightest {
+    background-color: $dark-lightest;
+}
+
 .navbar-transparent {
     background: rgb(0, 0, 0);
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.39827268798144255) 0%,
@@ -15,6 +23,32 @@
 
     .dropdown-menu {
         background-color: rgba(55, 55, 55, 0.9);
+
+        .dropdown-item {
+            color: $white;
+            opacity: 0.8;
+
+            &:hover {
+                background-color: transparent;
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            text-align: center;
+        }
+    }
+}
+
+.navbar-dark {
+
+    .nav-link {
+        text-align: center;
+    }
+
+    .dropdown-menu {
+        background-color: $dark-lightest;
+        border: 1px solid lighten($dark-lightest, 15%);
 
         .dropdown-item {
             color: $white;
@@ -92,4 +126,115 @@ header {
     input[type='text'], input[type='date'], input[type='email'], input[type='password'] {
         opacity: .9;
     }
+}
+
+ul.timeline {
+    list-style-type: none;
+    position: relative;
+
+    &:before {
+        content: ' ';
+        background: lighten($dark-lightest, 20%);
+        display: inline-block;
+        position: absolute;
+        top: 2px;
+        left: 29px;
+        width: 2px;
+        height: 95%;
+        z-index: 400;
+    }
+
+    li {
+        margin: 20px 0;
+        padding-left: 15px;
+
+        &:before {
+            content: ' ';
+            background: lighten($dark-lightest, 25%);
+            display: inline-block;
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid lighten($dark-lightest, 50%);
+            left: 20px;
+            width: 20px;
+            height: 20px;
+            z-index: 400;
+        }
+
+        &.active:before {
+            background: $primary;
+        }
+
+        .badge {
+            font-size: .8rem;
+        }
+    }
+}
+
+table {
+    td, th {
+        vertical-align: middle !important;
+        text-align: center;
+    }
+
+    thead {
+        background-color: lighten($dark, 4%);
+
+        th {
+            border: none !important;
+        }
+    }
+
+    tr.collapse-row {
+        button {
+            background-color: $dark-lighter;
+            border-radius: 0;
+
+            &:hover {
+                background-color: lighten($dark-lighter, 5%);
+
+                i {
+                    color: lighten($dark-lightest, 50%);
+                }
+            }
+
+            &:focus {
+                box-shadow: none;
+            }
+
+            i {
+                color: lighten($dark-lightest, 20%);
+
+                &.rotate {
+                    transition: all 0.4s ease-in-out;
+                }
+
+                &.rotate.down {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        td {
+            border: none;
+            padding: 0;
+            background-color: darken($dark-lightest, 5%);
+        }
+
+        div.collapse {
+            max-height: 280px;
+            overflow-y: auto;
+        }
+    }
+}
+
+.progress {
+    height: 5px;
+}
+
+a {
+   &.disabled {
+       pointer-events: none;
+       color: $gray-500;
+   }
 }

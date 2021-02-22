@@ -32,8 +32,8 @@
             </ul>
         </div>
 
-        <span class="invalid-feedback" role="alert" v-if="error">
-                <strong>{{ error }}</strong>
+        <span class="text-danger" role="alert" v-if="error">
+                <small>{{ error }}</small>
         </span>
     </div>
 </template>

@@ -25,4 +25,9 @@ class Location extends Model
 
         return sprintf('%2dmin', floor($minutes % 60));
     }
+
+    public function getOrderInRoute(int $routeId): int
+    {
+        return $this->routes->find($routeId)->pivot->order;
+    }
 }

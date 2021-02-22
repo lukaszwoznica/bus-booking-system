@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Ride\SearchRideRequest;
 use App\Location;
 use App\Services\RideService;
+use Carbon\Carbon;
 
 
 class RideController extends Controller
@@ -19,8 +20,8 @@ class RideController extends Controller
 
     public function index(SearchRideRequest $request)
     {
-        $startLocation = Location::where('name', $request->start_location)->first();
-        $endLocation = Location::where('name', $request->end_location)->first();
+        $startLocation = Location::where('name', $request->start_location)->with('routes')->first();
+        $endLocation = Location::where('name', $request->end_location)->with('routes')->first();
         $departureDate = $request->date;
 
         if (! $startLocation) {
@@ -37,6 +38,7 @@ class RideController extends Controller
         }
 
         $rides = $this->ridesService->getRidesByLocations($startLocation, $endLocation, $departureDate);
+        $departureDate = Carbon::parse($departureDate);
 
         return view('rides.index', compact('rides', 'startLocation', 'endLocation', 'departureDate'));
     }

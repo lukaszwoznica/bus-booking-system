@@ -21,9 +21,9 @@
 
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md {{ request()->routeIs('home', 'login', 'register')
-                                            ? 'navbar-dark navbar-transparent'
-                                            : 'navbar-light bg-dark shadow-sm' }}">
+    <nav class="navbar navbar-expand-md navbar-dark {{ request()->routeIs('home', 'login', 'register')
+                                            ? 'navbar-transparent'
+                                            : 'bg-dark-lighter' }}">
 
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
