@@ -59,7 +59,7 @@
                                                 @php
                                                     $perc = $ride->booked_seats * 100 / $ride->bus->seats;
                                                 @endphp
-                                                <div class="progress mb-1 mx-4">
+                                                <div class="progress">
                                                     <div
                                                         class="progress-bar {{ $perc == 100 ? 'bg-danger' : ($perc >= 85  ? 'bg-warning' : '') }}"
                                                         role="progressbar" style="width: {{ $perc }}%">
@@ -124,7 +124,7 @@
             });
 
             $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
+                $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" })
             })
         })
     </script>

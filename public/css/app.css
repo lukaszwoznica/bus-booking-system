@@ -15736,6 +15736,14 @@ table tr.collapse-row div.collapse {
 
 .progress {
   height: 5px;
+  margin: 0 1.5rem 0.25rem 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .progress {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 a.disabled {
