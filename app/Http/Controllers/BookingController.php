@@ -30,7 +30,7 @@ class BookingController extends Controller
         $bookings = auth()->user()->bookings()
             ->with('ride', 'startLocation', 'endLocation')
             ->latest()
-            ->paginate(15);
+            ->paginate(25);
 
         return view('bookings.index', compact('bookings'));
     }

@@ -244,3 +244,59 @@ a {
        color: $gray-500;
    }
 }
+
+input {
+    &.input-dark {
+        background-color: lighten($dark-lightest, 10%);
+        border-color: $dark-lightest;
+        color: $white;
+
+        &:focus {
+            background-color: lighten($dark-lightest, 20%);
+            color: $white;
+            border-color: lighten($dark-lightest, 40%) !important;
+            box-shadow: none;
+        }
+    }
+}
+
+.nav-pills {
+    .nav-link {
+        color: $gray-300;
+
+        &:hover {
+            color: $white;
+        }
+    }
+}
+
+.pagination {
+    .page-item {
+        .page-link {
+            background-color: $dark-lightest;
+            color: $white;
+            border-color: lighten($dark, 5%);
+
+            &:hover {
+                background-color: lighten($dark-lightest, 5%);
+            }
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
+
+        &.disabled {
+            .page-link {
+                background-color: lighten($dark-lightest, 15%);
+                color: $gray-400;
+            }
+        }
+
+        &.active {
+            .page-link {
+                background-color: $primary;
+            }
+        }
+    }
+}

@@ -110,6 +110,7 @@
                             </div>
                         @endif
                     </div>
+                    <div class="card-footer"></div>
                 </div>
             </div>
         </div>

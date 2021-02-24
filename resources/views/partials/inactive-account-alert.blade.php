@@ -1,6 +1,6 @@
 @auth
     @if(! Auth::user()->hasVerifiedEmail())
-        <div class="alert alert-primary" role="alert">
+        <div class="alert alert-secondary text-center" role="alert">
             Your account is inactive. Please check your email for a verification link.
             If you did not receive the email,
             <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
