@@ -18,15 +18,19 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/rides', 'RideController@index')->name('rides.index');
 
-Route::get('/profile', 'ProfileController@edit')->name('profile.edit');
-Route::patch('/profile/{user}', 'ProfileController@update')->name('profile.update');
-Route::patch('/update-password/{user}', 'ProfileController@updatePassword')->name('profile.update-password');
+Route::name('profile.')->group(function () {
+    Route::get('/profile', 'ProfileController@edit')->name('edit');
+    Route::patch('/profile/{user}', 'ProfileController@update')->name('update');
+    Route::patch('/profile/{user}/password', 'ProfileController@updatePassword')->name('update-password');
+});
 
-Route::get('/my-bookings', 'BookingController@index')->name('bookings.index');
-Route::get('/new-booking/{ride}/{startLocation}/{endLocation}/{date}', 'BookingController@create')
-    ->name('bookings.create');
-Route::post('/bookings', 'BookingController@store')->name('bookings.store');
-Route::patch('/bookings/{booking}', 'BookingController@cancel')->name('bookings.cancel');
+Route::name('bookings.')->group(function () {
+    Route::get('/my-bookings', 'BookingController@index')->name('index');
+    Route::get('/new-booking/{ride}{startLocation}/{endLocation}/{date}', 'BookingController@create')->name('create');
+    Route::get('booking/{booking}', 'BookingController@show')->name('show');
+    Route::post('/bookings', 'BookingController@store')->name('store');
+    Route::patch('/bookings/{booking}', 'BookingController@cancel')->name('cancel');
+});
 
 Route::namespace('Admin')
     ->prefix('admin')
