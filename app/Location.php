@@ -30,4 +30,9 @@ class Location extends Model
     {
         return $this->routes->find($routeId)->pivot->order;
     }
+
+    public function getMinutesFromDepartureInRoute(int $routeId): int
+    {
+        return $this->routes->find($routeId)->pivot->minutes_from_departure;
+    }
 }

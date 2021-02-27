@@ -67,7 +67,8 @@
 
                                     <div class="form-group d-flex justify-content-center mt-4">
                                         <div class="col-8">
-                                            <button type="submit" class="btn btn-block btn-primary">Make booking
+                                            <button type="submit" class="btn btn-block btn-primary">
+                                                Make Booking
                                             </button>
                                         </div>
                                     </div>

@@ -35,6 +35,11 @@ class BookingController extends Controller
         return view('bookings.index', compact('bookings'));
     }
 
+    public function show(Booking $booking)
+    {
+        return view('bookings.show', compact('booking'));
+    }
+
     public function create(Ride $ride, Location $startLocation, Location $endLocation, string $date)
     {
         $validRide = $this->ridesService
@@ -82,6 +87,6 @@ class BookingController extends Controller
             flash('This booking can not be cancelled.')->warning();
         }
 
-        return redirect()->route('bookings.index');
+        return redirect()->route('bookings.show', $booking);
     }
 }

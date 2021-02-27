@@ -6,16 +6,12 @@
             <div class="col-12">
                 <div class="card bg-dark-lighter text-white mt-3">
                     <div class="card-header bg-dark-lightest d-flex">
-                        <div class="col-sm-7">
-                            <h4 class="m-0">
-                                My bookings
-                            </h4>
-                        </div>
+                        <h4 class="m-0">
+                            My bookings
+                        </h4>
                     </div>
 
                     <div class="card-body">
-                        @include('flash::message')
-
                         <div class="table-responsive">
                             <table class="table text-white">
                                 <thead>
@@ -41,20 +37,10 @@
                                         <td>{{ $booking->created_at->format('d m Y H:i') }}</td>
                                         <td>{{ ucwords($booking->status) }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-primary">
-                                                Show details
+                                            <a href="{{ route('bookings.show', $booking) }}" class="btn btn-primary">
+                                                Show Details
                                             </a>
                                         </td>
-{{--                                        <td>--}}
-{{--                                            <form action="{{ route('bookings.cancel', $booking) }}" method="POST">--}}
-{{--                                                @csrf--}}
-{{--                                                @method('PATCH')--}}
-{{--                                                <button class="btn btn-sm btn-danger"--}}
-{{--                                                    {{ !$booking->canBeCancelled() ? 'disabled' : ''}}>--}}
-{{--                                                    Cancel booking--}}
-{{--                                                </button>--}}
-{{--                                            </form>--}}
-{{--                                        </td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -67,6 +53,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer"></div>
                 </div>
             </div>
         </div>
