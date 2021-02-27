@@ -1948,6 +1948,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['items', 'error', 'name', 'id', 'required', 'old', 'placeholder', 'prepend_icon'],
   mounted: function mounted() {
@@ -104541,7 +104542,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "form-group" }, [
+  return _c("div", { staticClass: "form-group position-relative" }, [
     _c("div", { staticClass: "input-group" }, [
       _vm.prepend_icon
         ? _c("div", { staticClass: "input-group-prepend" }, [
@@ -104552,14 +104553,6 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.query,
-            expression: "query"
-          }
-        ],
         staticClass: "form-control",
         class: { "is-invalid": _vm.error },
         attrs: {
@@ -104617,26 +104610,23 @@ var render = function() {
               return _vm.resetSelectedItem($event)
             }
           ],
-          input: [
+          input: function(evt) {
+            return (_vm.query = evt.target.value)
+          },
+          keyup: [
+            _vm.showOptions,
             function($event) {
-              if ($event.target.composing) {
-                return
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
               }
-              _vm.query = $event.target.value
-            },
-            _vm.showOptions
+              return $event.target.nextElementSibling.focus()
+            }
           ],
           focusout: function($event) {
             return _vm.hideOptions(100)
-          },
-          keyup: function($event) {
-            if (
-              !$event.type.indexOf("key") &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
-            }
-            return $event.target.nextElementSibling.focus()
           }
         }
       })
@@ -104678,9 +104668,14 @@ var render = function() {
     ),
     _vm._v(" "),
     _vm.error
-      ? _c("span", { staticClass: "text-danger", attrs: { role: "alert" } }, [
-          _c("small", [_vm._v(_vm._s(_vm.error))])
-        ])
+      ? _c(
+          "span",
+          {
+            staticClass: "text-danger position-absolute",
+            attrs: { role: "alert" }
+          },
+          [_c("small", [_vm._v(_vm._s(_vm.error))])]
+        )
       : _vm._e()
   ])
 }

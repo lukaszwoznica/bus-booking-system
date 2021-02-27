@@ -1,5 +1,5 @@
 <template>
-    <div class="form-group">
+    <div class="form-group position-relative">
         <div class="input-group">
             <div v-if="prepend_icon" class="input-group-prepend">
                 <div class="input-group-text">
@@ -9,13 +9,14 @@
             <input type="text" :name="name" :id="id" class="form-control"
                    :class="{'is-invalid' : error}"
                    :placeholder="placeholder"
-                   v-model="query"
+                   :value="query"
                    :required="required"
                    @keydown.up="keyUp"
                    @keydown.down="keyDown"
                    @keydown.enter="selectItem"
                    @keydown.delete="resetSelectedItem"
-                   @input="showOptions"
+                   @input='evt=>query=evt.target.value'
+                   v-on:keyup="showOptions"
                    @focusout="hideOptions(100)"
                    v-on:keyup.enter="$event.target.nextElementSibling.focus()"
                    autocomplete="off">
@@ -32,8 +33,8 @@
             </ul>
         </div>
 
-        <span class="text-danger" role="alert" v-if="error">
-                <small>{{ error }}</small>
+        <span class="text-danger position-absolute" role="alert" v-if="error">
+            <small>{{ error }}</small>
         </span>
     </div>
 </template>
