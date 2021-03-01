@@ -68,8 +68,14 @@
                                                 {{ $ride->bus->seats - $ride->booked_seats }} seats available
                                             </td>
                                             <td>
-                                                <a href="{{ route('bookings.create', [$ride->id, $startLocation->id, $endLocation->id, $departureDate->toDateString()]) }}"
-                                                   class="btn btn-primary">Book This Ride</a>
+                                                <a class="btn btn-primary" href="{{ route('bookings.create', [
+                                                        $ride->id,
+                                                        $startLocation->id,
+                                                        $endLocation->id,
+                                                        request()->get('date')])
+                                                }}">
+                                                    Book This Ride
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr class="collapse-row">

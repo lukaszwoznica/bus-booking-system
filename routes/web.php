@@ -26,7 +26,7 @@ Route::name('profile.')->group(function () {
 
 Route::name('bookings.')->group(function () {
     Route::get('/my-bookings', 'BookingController@index')->name('index');
-    Route::get('/new-booking/{ride}{startLocation}/{endLocation}/{date}', 'BookingController@create')->name('create');
+    Route::get('/new-booking/{ride}/{startLocation}/{endLocation}/{date}', 'BookingController@create')->name('create');
     Route::get('booking/{booking}', 'BookingController@show')->name('show');
     Route::post('/bookings', 'BookingController@store')->name('store');
     Route::patch('/bookings/{booking}', 'BookingController@cancel')->name('cancel');
