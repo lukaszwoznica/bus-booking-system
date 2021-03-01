@@ -76,14 +76,16 @@ class RideService
             })->where(function (Builder $query) use ($dayName, $depDate, $calculatedDepartureTime, $dayBefore) {
                 $query->whereHas('schedule', function (Builder $query) use ($dayName, $depDate, $calculatedDepartureTime, $dayBefore) {
                     $query->where(function (Builder $query) use ($dayName, $depDate, $calculatedDepartureTime, $dayBefore) {
-                        $query->where($dayName, true)
-                            ->where('start_date', '<=', $depDate)
-                            ->whereRaw("$calculatedDepartureTime <= '23:59:59'");
-                    })->orWhere(function (Builder $query) use ($dayBefore, $calculatedDepartureTime) {
-                        $dayNameBefore = Str::lower(Carbon::parse($dayBefore)->dayName);
-                        $query->where($dayNameBefore, true)
-                            ->where('start_date', '<=', $dayBefore)
-                            ->whereRaw("$calculatedDepartureTime > '23:59:59'");
+                        $query->where(function (Builder $query) use ($dayName, $depDate, $calculatedDepartureTime, $dayBefore) {
+                            $query->where($dayName, true)
+                                ->where('start_date', '<=', $depDate)
+                                ->whereRaw("$calculatedDepartureTime <= '23:59:59'");
+                        })->orWhere(function (Builder $query) use ($dayBefore, $calculatedDepartureTime) {
+                            $dayNameBefore = Str::lower(Carbon::parse($dayBefore)->dayName);
+                            $query->where($dayNameBefore, true)
+                                ->where('start_date', '<=', $dayBefore)
+                                ->whereRaw("$calculatedDepartureTime > '23:59:59'");
+                        });
                     })->where(function (Builder $query) use ($depDate) {
                         $query->where('end_date', '>=', $depDate)
                             ->orWhereNull('end_date');
