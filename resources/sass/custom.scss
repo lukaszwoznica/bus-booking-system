@@ -300,3 +300,19 @@ input {
         }
     }
 }
+
+.swal2-popup {
+    background-color: $dark !important;
+
+    .swal2-title {
+        color: $white;
+    }
+
+    .swal2-content {
+        color: $white;
+    }
+
+    .swal2-styled:focus {
+        box-shadow: none;
+    }
+}

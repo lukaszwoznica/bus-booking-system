@@ -103,6 +103,8 @@
     </main>
 </div>
 
+@include('sweetalert::alert')
+
 @yield('scripts')
 
 </body>

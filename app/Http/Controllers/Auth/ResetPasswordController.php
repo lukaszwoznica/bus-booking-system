@@ -27,4 +27,12 @@ class ResetPasswordController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+
+    public function redirectPath()
+    {
+        alert()->success('Your password has been changed', 'You have been automatically logged in.')
+            ->showConfirmButton('Ok', '#2aae61');
+
+        return $this->redirectTo;
+    }
 }

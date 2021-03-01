@@ -117030,7 +117030,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./scripts/toggleRideFormInputs */ "./resources/js/scripts/toggleRideFormInputs.js");
 
-__webpack_require__(/*! ./scripts/deleteConfirm */ "./resources/js/scripts/deleteConfirm.js");
+__webpack_require__(/*! ./scripts/confirmAlerts */ "./resources/js/scripts/confirmAlerts.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
@@ -117368,9 +117368,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/scripts/deleteConfirm.js":
+/***/ "./resources/js/scripts/confirmAlerts.js":
 /*!***********************************************!*\
-  !*** ./resources/js/scripts/deleteConfirm.js ***!
+  !*** ./resources/js/scripts/confirmAlerts.js ***!
   \***********************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -117391,6 +117391,23 @@ window.deleteConfirm = function (formId) {
     confirmButtonColor: '#C82333',
     cancelButtonColor: '#212529',
     confirmButtonText: 'Yes, delete it'
+  }).then(function (result) {
+    if (result.isConfirmed) {
+      document.getElementById(formId).submit();
+    }
+  });
+};
+
+window.cancelBookingConfirm = function (formId) {
+  sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire({
+    title: 'Are you sure?',
+    text: 'Do you want to cancel this booking?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#e3342f',
+    cancelButtonColor: '#444444',
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No'
   }).then(function (result) {
     if (result.isConfirmed) {
       document.getElementById(formId).submit();

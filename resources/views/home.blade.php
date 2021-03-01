@@ -16,12 +16,6 @@
             <div class="col-sm-12">
                 <div class="card card-transparent py-2">
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
                         <form action="{{ route('rides.index') }}" method="GET">
                             <div class="form-row align-items-center justify-content-center">
                                 <div class="col-sm-12 col-md-4 col-lg-3 col-xl-4">

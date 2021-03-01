@@ -106,8 +106,7 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
-        $msg = 'Your account has been successfully registered. Please check your email for a verification link.';
-
-        flash($msg)->info();
+        alert()->success('Your account has been successfully registered', 'Please check your email for a verification link.')
+            ->showConfirmButton('Ok', '#2aae61');
     }
 }

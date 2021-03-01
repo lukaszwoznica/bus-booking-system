@@ -45,7 +45,7 @@
                                             <input type="number"
                                                    class="form-control input-dark @error('seats') is-invalid @enderror"
                                                    name="seats" id="seats" min="1" value="{{ old('seats', 1) }}"
-                                                   required>
+                                                   max="{{ $availableSeats }}" required>
                                             <div class="input-group-append">
                                                 <span class="input-group-text border-0 bg-dark-lightest text-white">
                                                     {{ $availableSeats }} available

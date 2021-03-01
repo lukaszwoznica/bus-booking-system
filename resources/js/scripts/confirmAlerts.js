@@ -15,3 +15,20 @@ window.deleteConfirm = function(formId, itemName = 'item') {
         }
     })
 }
+
+window.cancelBookingConfirm = function(formId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to cancel this booking?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#e3342f',
+        cancelButtonColor: '#444444',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById(formId).submit()
+        }
+    })
+}

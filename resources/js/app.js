@@ -6,7 +6,7 @@
 
 require('./bootstrap');
 require('./scripts/toggleRideFormInputs')
-require('./scripts/deleteConfirm')
+require('./scripts/confirmAlerts')
 
 window.Vue = require('vue');
 

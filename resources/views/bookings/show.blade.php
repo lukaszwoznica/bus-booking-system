@@ -12,8 +12,6 @@
                     </div>
 
                     <div class="card-body">
-                        @include('flash::message')
-
                         <dl class="row">
                             <dt class="col-sm-4">Ride</dt>
                             <dd class="col-sm-8">
@@ -48,12 +46,12 @@
                     </div>
 
                     <div class="card-footer text-center">
-                        <form action="{{ route('bookings.cancel', $booking) }}" method="POST">
+                        <form action="{{ route('bookings.cancel', $booking) }}" id="cancelBooking" method="POST">
                             @csrf
                             @method('PATCH')
 
-                            <button class="btn btn-sm btn-danger"
-                                {{ !$booking->canBeCancelled() ? 'disabled' : ''}}>
+                            <button class="btn btn-sm btn-danger" {{ !$booking->canBeCancelled() ? 'disabled' : ''}}
+                                    onclick="cancelBookingConfirm('cancelBooking')" type="button">
                                 Cancel Booking
                             </button>
                             <p class="mb-0">

@@ -19,4 +19,12 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+    public function redirectPath()
+    {
+        alert()->success('The email has been sent.', 'You will receive an email when your booking is confirmed.')
+            ->showConfirmButton('Ok', '#2aae61');
+
+        return $this->redirectTo;
+    }
 }

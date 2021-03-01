@@ -73,18 +73,21 @@ class BookingController extends Controller
                 ->withInput($request->input());
         }
 
-        session()->flash('status', 'The booking has been successfully created.');
+        alert()->success('The booking has been made', 'You will receive an email when your booking is confirmed.')
+            ->showConfirmButton('Ok', '#2aae61');
 
-        return redirect()->route('home');
+        return redirect()->route('bookings.index');
     }
 
     public function cancel(Booking $booking)
     {
         if ($booking->canBeCancelled()) {
             $this->bookingService->updateStatus($booking, BookingStatus::CANCELLED);
-            flash('The booking has been cancelled.')->success();
+            alert()->success('The booking has been cancelled.')
+                ->showConfirmButton('Ok', '#2aae61');
         } else {
-            flash('This booking can not be cancelled.')->warning();
+            alert()->warning('This booking can not be cancelled.')
+                ->showConfirmButton('Ok', '#2aae61');
         }
 
         return redirect()->route('bookings.show', $booking);

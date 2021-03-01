@@ -23,7 +23,7 @@ class ProfileController extends Controller
     {
         $user->update($request->validated());
 
-        flash('Your profile has been successfully updated.')->success();
+        alert()->success('Success!', 'Your profile has been updated.')->showConfirmButton('Ok', '#2aae61');
 
         return redirect()->route('profile.edit');
     }
@@ -35,7 +35,7 @@ class ProfileController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            flash('Your password has been successfully updated.')->success();
+            alert()->success('Success!', 'Your password has been updated.')->showConfirmButton('Ok', '#2aae61');
         } else {
             $errors['current_password'] = 'Current password is incorrect.';
         }
