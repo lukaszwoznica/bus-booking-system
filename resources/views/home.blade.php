@@ -45,24 +45,23 @@
                                 </div>
 
                                 <div class="col-sm-12 col-md-4 col-lg-3 col-xl-2">
-                                    <div class="form-group">
+                                    <div class="form-group position-relative">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">
                                                     <i class="far fa-calendar-alt"></i>
                                                 </div>
                                             </div>
-                                            <input type="date" name="date" id="date"
+                                            <input name="date" id="date" placeholder="Date"
                                                    class="form-control @error('date') is-invalid @enderror"
                                                    value="{{ old('date') }}"
                                                    required>
-
-                                            @error('date')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
                                         </div>
+                                        @error('date')
+                                            <span class="text-danger position-absolute" role="alert">
+                                                <small>{{ $message }}</small>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -81,4 +80,25 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('scripts')
+    <script>
+        window.addEventListener('load', function () {
+            flatpickr('#date', {
+                allowInput: true,
+                altInput: true,
+                monthSelectorType: 'static',
+                altFormat: 'd M Y',
+                altInputClass: 'form-control datepicker',
+                dateFormat: 'Y-m-d',
+                minDate: 'today',
+                position: 'auto left',
+                locale: {
+                    firstDayOfWeek: 1
+                },
+            });
+        })
+    </script>
 @endsection

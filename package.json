@@ -30,6 +30,7 @@
         "chart.js": "^2.9.4",
         "datatables.net-bs4": "^1.10.23",
         "datatables.net-buttons-bs4": "^1.6.5",
+        "flatpickr": "^4.6.9",
         "icheck-bootstrap": "^3.0.1",
         "overlayscrollbars": "^1.13.0",
         "sweetalert2": "^10.14.1",

@@ -316,3 +316,35 @@ input {
         box-shadow: none;
     }
 }
+
+.flatpickr-calendar {
+    .flatpickr-day {
+        &.selected {
+            background-color: $green;
+            border-color: $green;
+
+            &:hover {
+                background-color: lighten($green, 5%);
+                border-color: lighten($green, 5%);
+            }
+
+            &.nextMonthDay, &.prevMonthDay {
+                background-color: $green;
+                border-color: $green;
+
+                &:hover {
+                    background-color: lighten($green, 5%);
+                    border-color: lighten($green, 5%);
+                }
+            }
+        }
+    }
+
+    .flatpickr-months {
+        .flatpickr-next-month:hover,.flatpickr-prev-month:hover {
+            svg {
+                fill: $green !important;
+            }
+        }
+    }
+}

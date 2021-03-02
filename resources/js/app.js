@@ -8,7 +8,11 @@ require('./bootstrap');
 require('./scripts/toggleRideFormInputs')
 require('./scripts/confirmAlerts')
 
-window.Vue = require('vue');
+window.Vue = require('vue')
+
+import flatpickr from "flatpickr"
+window.flatpickr = flatpickr
+require("flatpickr/dist/themes/light.css");
 
 
 /**

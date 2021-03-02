@@ -106,8 +106,8 @@
                                                     || old('ride_type') == 'cyclic' ? "none" : "block" }}">
                                 <div class="form-group">
                                     <label for="ride-date">Ride date</label>
-                                    <input type="date" class="form-control @error('ride_date') is-invalid @enderror"
-                                           name="ride_date" id="ride-date" required
+                                    <input type="date" name="ride_date" id="ride-date" required
+                                           class="form-control @error('ride_date') is-invalid @enderror datepicker"
                                            value="{{ old('ride_date', $ride->ride_date ? $ride->ride_date->format('Y-m-d') : '') }}"
                                         {{ ($ride->isCyclic() && ! old('ride_type'))
                                             || old('ride_type') == 'cyclic' ? "disabled" : "" }}>
@@ -148,9 +148,8 @@
 
                                 <div class="form-group">
                                     <label for="start-date">Start date</label>
-                                    <input type="date"
-                                           class="form-control @error('start_date') is-invalid @enderror"
-                                           name="start_date" id="start-date" required
+                                    <input type="date" name="start_date" id="start-date" required
+                                           class="form-control @error('start_date') is-invalid @enderror datepicker"
                                            value="{{ old('start_date',
                                                         isset($ride->schedule->start_date) ? $ride->schedule->start_date->format('Y-m-d') : '') }}"
                                         {{ (! $ride->isCyclic() && ! old('ride_type'))
@@ -165,8 +164,8 @@
 
                                 <div class="form-group">
                                     <label for="end-date">End date</label>
-                                    <input type="date" class="form-control @error('end_date') is-invalid @enderror"
-                                           name="end_date" id="end-date"
+                                    <input type="date" name="end_date" id="end-date"
+                                           class="form-control @error('end_date') is-invalid @enderror datepicker"
                                            value="{{ old('end_date', isset($ride->schedule->end_date) ? $ride->schedule->end_date->format('Y-m-d') : '') }}"
                                         {{ (! $ride->isCyclic() && ! old('ride_type'))
                                             || old('ride_type') == 'single' ? "disabled" : "" }}>
@@ -196,3 +195,27 @@
         </div>
     </div>
 @endsection
+
+@push('adminlte_js')
+    <script>
+        window.addEventListener('load', function () {
+            flatpickr('.datepicker', {
+                allowInput: true,
+                minDate: 'today',
+                position: 'auto left',
+                locale: {
+                    firstDayOfWeek: 1
+                },
+            });
+
+            flatpickr('#departure-time', {
+                allowInput: true,
+                enableTime: true,
+                noCalendar: true,
+                time_24hr: true,
+                dateFormat: "H:i",
+                position: 'auto left',
+            })
+        })
+    </script>
+@endpush

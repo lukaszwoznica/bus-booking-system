@@ -15811,3 +15811,30 @@ input.input-dark:focus {
   box-shadow: none;
 }
 
+.flatpickr-calendar .flatpickr-day.selected {
+  background-color: #2aae56;
+  border-color: #2aae56;
+}
+
+.flatpickr-calendar .flatpickr-day.selected:hover {
+  background-color: #2fc360;
+  border-color: #2fc360;
+}
+
+.flatpickr-calendar .flatpickr-day.selected.nextMonthDay,
+.flatpickr-calendar .flatpickr-day.selected.prevMonthDay {
+  background-color: #2aae56;
+  border-color: #2aae56;
+}
+
+.flatpickr-calendar .flatpickr-day.selected.nextMonthDay:hover,
+.flatpickr-calendar .flatpickr-day.selected.prevMonthDay:hover {
+  background-color: #2fc360;
+  border-color: #2fc360;
+}
+
+.flatpickr-calendar .flatpickr-months .flatpickr-next-month:hover svg,
+.flatpickr-calendar .flatpickr-months .flatpickr-prev-month:hover svg {
+  fill: #2aae56 !important;
+}
+

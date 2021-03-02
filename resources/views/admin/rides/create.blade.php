@@ -63,8 +63,7 @@
                                 <div class="form-group">
                                     <label for="departure-time">Departure time</label>
                                     <input type="time" class="form-control @error('bus_id') is-invalid @enderror"
-                                           required
-                                           name="departure_time" id="departure-time"
+                                           required name="departure_time" id="departure-time"
                                            value="{{ old('departure_time') }}">
 
                                     @error('departure_time')
@@ -104,10 +103,9 @@
                                      style="display: {{ ! old('ride_type') || old('ride_type') == 'single' ? "block" : "none" }}">
                                     <div class="form-group">
                                         <label for="ride-date">Ride date</label>
-                                        <input type="date"
-                                               class="form-control @error('ride_date') is-invalid @enderror"
-                                               name="ride_date" id="ride-date" value="{{ old('ride_date') }}"
-                                               required
+                                        <input type="date" name="ride_date" id="ride-date" required
+                                               class="form-control @error('ride_date') is-invalid @enderror datepicker"
+                                               value="{{ old('ride_date') }}"
                                             {{ old('ride_type') == 'cyclic' ? "disabled" : "" }}>
 
                                         @error('ride_date')
@@ -143,10 +141,10 @@
 
                                     <div class="form-group">
                                         <label for="start-date">Start date</label>
-                                        <input type="date"
-                                               class="form-control @error('start_date') is-invalid @enderror"
-                                               name="start_date" id="start-date" value="{{ old('start_date') }}"
-                                               required {{ ! old('ride_type') || old('ride_type') == 'single' ? "disabled" : "" }}>
+                                        <input type="date" name="start_date" id="start-date" required
+                                               class="form-control @error('start_date') is-invalid @enderror datepicker"
+                                               value="{{ old('start_date') }}"
+                                            {{ ! old('ride_type') || old('ride_type') == 'single' ? "disabled" : "" }}>
 
                                         @error('start_date')
                                             <span class="invalid-feedback" role="alert">
@@ -157,9 +155,8 @@
 
                                     <div class="form-group">
                                         <label for="end-date">End date</label>
-                                        <input type="date"
-                                               class="form-control @error('end_date') is-invalid @enderror"
-                                               name="end_date" id="end-date" value="{{ old('end_date') }}"
+                                        <input type="date" name="end_date" id="end-date" value="{{ old('end_date') }}"
+                                               class="form-control @error('end_date') is-invalid @enderror datepicker"
                                             {{ ! old('ride_type') || old('ride_type') == 'single' ? "disabled" : "" }}>
                                         <small class="form-text text-muted">
                                             Leave blank to make the ride cycle endless
@@ -188,3 +185,27 @@
         </form>
     </div>
 @endsection
+
+@push('adminlte_js')
+    <script>
+        window.addEventListener('load', function () {
+            flatpickr('.datepicker', {
+                allowInput: true,
+                minDate: 'today',
+                position: 'auto left',
+                locale: {
+                    firstDayOfWeek: 1
+                },
+            });
+
+            flatpickr('#departure-time', {
+                allowInput: true,
+                enableTime: true,
+                noCalendar: true,
+                time_24hr: true,
+                dateFormat: "H:i",
+                position: 'auto left',
+            })
+        })
+    </script>
+@endpush
