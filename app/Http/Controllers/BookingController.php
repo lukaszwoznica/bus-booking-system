@@ -64,7 +64,11 @@ class BookingController extends Controller
     public function store(PostBookingRequest $request)
     {
         try {
-            $this->bookingService->create($request->validated());
+            $booking = $this->bookingService->create($request->validated());
+
+            if ($booking->ride->auto_confirm) {
+                $this->bookingService->updateStatus($booking, BookingStatus::CONFIRMED);
+            }
         } catch (NotEnoughSeatsAvailableException $exception) {
             $errors['seats'] = 'You cannot book more seats than are available.';
 

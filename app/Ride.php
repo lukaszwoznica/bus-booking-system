@@ -9,11 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 class Ride extends Model
 {
     protected $fillable = [
-        'bus_id', 'route_id', 'departure_time', 'ride_date'
+        'bus_id', 'route_id', 'departure_time', 'ride_date', 'auto_confirm'
     ];
 
     protected $dates = [
         'departure_time', 'ride_date'
+    ];
+
+    protected $attributes = [
+        'auto_confirm' => false,
     ];
 
     public function bus()

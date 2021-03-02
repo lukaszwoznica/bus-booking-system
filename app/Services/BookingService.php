@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class BookingService
 {
-    public function create(array $data)
+    public function create(array $data): Booking
     {
         $ride = Ride::find($data['ride_id']);
         $rideDepartureTime = Carbon::parse($ride->departure_time);
@@ -23,11 +23,12 @@ class BookingService
                 ->where('id', $data['start_location_id'])
                 ->first()
                 ->pivot->minutes_from_departure);
-        $rideStartDate = Carbon::parse($data['travel_date']);
 
+        $rideStartDate = Carbon::parse($data['travel_date']);
         if (!$rideDepartureTime->isSameDay($travelStartTime)) {
             $rideStartDate->subDay();
         }
+        $data['ride_start_date'] = $rideStartDate->toDateString();
 
         $bookedSeats = $this->getBookedSeatsSum(
             $ride,
@@ -41,10 +42,7 @@ class BookingService
             throw new NotEnoughSeatsAvailableException('Not enough seats are available for this ride');
         }
 
-        auth()->user()->bookings()->create(array_merge(
-            $data,
-            ['ride_start_date' => $rideStartDate->toDateString()]
-        ));
+        return auth()->user()->bookings()->create($data);
     }
 
     public function updateStatus(Booking $booking, string $status)

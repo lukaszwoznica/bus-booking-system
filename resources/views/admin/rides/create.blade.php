@@ -73,6 +73,24 @@
                                     @enderror
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        <input class="custom-control-input" type="checkbox"
+                                               name="auto_confirm" value="1" id="auto-confirm"
+                                            {{ old('auto_confirm') ? "checked" : "" }}>
+
+                                        <label class="custom-control-label" for="auto-confirm">
+                                            Automatic bookings confirmation
+                                        </label>
+                                    </div>
+
+                                    @error('auto_confirm')
+                                        <span class="invalid-feedback" style="display: block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
                                 <div class="form-group text-center mt-4">
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input class="custom-control-input" type="radio" name="ride_type"

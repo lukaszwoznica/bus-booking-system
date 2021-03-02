@@ -29,6 +29,7 @@ class RideRequest extends FormRequest
             'route_id' => 'required|integer|exists:routes,id',
             'bus_id' => 'required|integer|exists:buses,id',
             'departure_time' => 'required|date_format:H:i',
+            'auto_confirm' => 'boolean',
             'ride_type' => 'required|string',
             'ride_date' => "exclude_if:ride_type,cyclic|required|date|after_or_equal:$today",
             'days' => 'exclude_if:ride_type,single|required|array|min:1|',

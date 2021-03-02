@@ -22,6 +22,7 @@ class RidesDataTable extends DataTable
             ->editColumn('bus', fn(Ride $ride) => $ride->bus->name)
             ->editColumn('departure_time', fn(Ride $ride) => $ride->departure_time->format('H:i'))
             ->editColumn('ride_date', fn(Ride $ride) => optional($ride->ride_date)->format('Y-m-d') ?? '-')
+            ->editColumn('auto_confirm', fn(Ride $ride) => $ride->auto_confirm ? 'Yes' : 'No')
             ->editColumn('updated_at', fn(Ride $ride) => $ride->updated_at)
             ->addColumn('ride_type', fn(Ride $ride) => $ride->ride_date ? 'Single' : 'Cyclic')
             ->addColumn('state', fn(Ride $ride) => $ride->isActive() ? 'Active' : 'Inactive')
@@ -81,9 +82,10 @@ class RidesDataTable extends DataTable
             Column::make('departure_time')->width('5%'),
             Column::make('ride_date')->width('10%'),
             Column::make('ride_type')->width('5%')->searchable('false'),
+            Column::make('auto_confirm')->width('5%')->searchable('false'),
             Column::make('updated_at')->width('10%'),
             Column::computed('state')->width('5%'),
-            Column::computed('actions')->width('20%')->addClass('text-center')
+            Column::computed('actions')->width('15%')->addClass('text-center')
         ];
     }
 
