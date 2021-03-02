@@ -35,6 +35,8 @@ class DashboardController extends Controller
     private function getBookingsByMonthChartData(): array
     {
         $bookingsCountData = $this->bookingService->lastMonthsCount(6);
+        $thisMonth = end($bookingsCountData);
+        $lastMonth = prev($bookingsCountData);
         $labels = $data = [];
 
         foreach ($bookingsCountData as $month => $count) {
@@ -45,13 +47,18 @@ class DashboardController extends Controller
         $chartData['labels'] = $labels;
         $chartData['datasets'] = [[
             'label' => 'Bookings',
-            'backgroundColor' => 'rgba(102, 16, 242, 0.6)',
-            'hoverBackgroundColor' => 'rgba(102, 16, 242, 0.75)',
+            'backgroundColor' => 'rgba(102, 16, 242, 0.5)',
+            'hoverBackgroundColor' => 'rgba(102, 16, 242, 0.7)',
             'borderWidth' => 1,
             'borderColor' => 'rgba(102, 16, 242, 0.8)',
             'hoverBorderColor' => 'rgba(102, 16, 242, 1)',
             'data' => $data
         ]];
+        $chartData['stats'] = [
+            'percentageChange' => round(($thisMonth - $lastMonth) / $lastMonth * 100, 1),
+            'avg' => round(collect($bookingsCountData)->avg(), 1),
+            'total' => collect($bookingsCountData)->sum()
+        ];
 
         return $chartData;
     }

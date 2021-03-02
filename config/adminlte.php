@@ -273,14 +273,9 @@ return [
             'active'      => ['/admin/users/*']
         ],
         [
-            'text'        => 'Home',
+            'text'        => 'Homepage',
             'topnav'      => true,
             'route'       => 'home'
-        ],
-        [
-            'text'        => 'search',
-            'search'      => true,
-            'topnav'      => true,
         ],
         [
             'text'        => 'My bookings',
