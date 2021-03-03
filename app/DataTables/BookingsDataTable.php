@@ -25,6 +25,11 @@ class BookingsDataTable extends DataTable
             ->editColumn('travel_date', fn(Booking $booking) => $booking->travel_date->format('Y-m-d'))
             ->editColumn('created_at', fn(Booking $booking) => $booking->created_at)
             ->editColumn('updated_at', fn(Booking $booking) => $booking->updated_at)
+            ->editColumn('ride', function(Booking $booking) {
+                $route = route('admin.rides.show', $booking->ride->id);
+                return "<a href='{$route}'>{$booking->ride->id}</a>";
+            })
+            ->rawColumns(['ride'])
             ->addColumn('ride', fn(Booking $booking) => $booking->ride->id)
             ->addColumn('actions', function (Booking $booking) {
                 return view('admin.partials.datatable-action-buttons', [

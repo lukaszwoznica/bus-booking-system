@@ -18,12 +18,16 @@ class RidesDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('route', fn(Ride $ride) => $ride->route->id . '. ' . $ride->route->name)
             ->editColumn('bus', fn(Ride $ride) => $ride->bus->name)
             ->editColumn('departure_time', fn(Ride $ride) => $ride->departure_time->format('H:i'))
             ->editColumn('ride_date', fn(Ride $ride) => optional($ride->ride_date)->format('Y-m-d') ?? '-')
             ->editColumn('auto_confirm', fn(Ride $ride) => $ride->auto_confirm ? 'Yes' : 'No')
             ->editColumn('updated_at', fn(Ride $ride) => $ride->updated_at)
+            ->editColumn('route', function(Ride $ride) {
+                $route = route('admin.routes.show', $ride->route->id);
+                return "<a href='{$route}'>" . $ride->route->id . '. ' . $ride->route->name . '</a>';
+            })
+            ->rawColumns(['route'])
             ->addColumn('ride_type', fn(Ride $ride) => $ride->ride_date ? 'Single' : 'Cyclic')
             ->addColumn('state', fn(Ride $ride) => $ride->isActive() ? 'Active' : 'Inactive')
             ->addColumn('actions', function (Ride $ride) {
