@@ -2169,7 +2169,7 @@ __webpack_require__.r(__webpack_exports__);
         minutes: null
       }, {
         id: null,
-        minutes: null
+        minutes: 0
       });
     }
 
@@ -2185,7 +2185,7 @@ __webpack_require__.r(__webpack_exports__);
     addInput: function addInput() {
       this.inputs.push({
         id: null,
-        minutes: null
+        minutes: parseInt(this.inputs[this.inputs.length - 1].minutes) + 1
       });
       this.applySelect2(this.inputs.length - 1);
     },
@@ -113640,8 +113640,9 @@ var render = function() {
                   type: "number",
                   name: "locations[" + index + "][minutes]",
                   disabled: index === 0,
+                  min:
+                    index > 1 ? parseInt(_vm.inputs[index - 1].minutes) + 1 : 0,
                   placeholder: "Minutes",
-                  min: "0",
                   required: ""
                 },
                 domProps: { value: input.minutes },

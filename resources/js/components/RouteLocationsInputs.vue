@@ -27,8 +27,8 @@
 
                 <div class="col-4 col-lg-3 offset-md-1">
                     <input type="number" :name="`locations[${index}][minutes]`" v-show="index !== 0"
-                           :disabled="index === 0"
-                           class="form-control mr-2" placeholder="Minutes" v-model="input.minutes" min="0"
+                           :disabled="index === 0" :min="index > 1 ? parseInt(inputs[index - 1].minutes) + 1 : 0"
+                           class="form-control mr-2" placeholder="Minutes" v-model="input.minutes"
                            required>
                 </div>
 
@@ -56,7 +56,7 @@ export default {
         if (this.route) {
             this.fillInputsWithRouteLocations(this.route.locations)
         } else {
-            this.inputs.push({id: null, minutes: null}, {id: null, minutes: null})
+            this.inputs.push({id: null, minutes: null}, {id: null, minutes: 0})
         }
 
         this.applySelect2(0)
@@ -71,7 +71,10 @@ export default {
 
     methods: {
         addInput() {
-            this.inputs.push({id: null, minutes: null})
+            this.inputs.push({
+                id: null,
+                minutes: parseInt(this.inputs[this.inputs.length - 1].minutes) + 1
+            })
             this.applySelect2(this.inputs.length - 1)
         },
 
