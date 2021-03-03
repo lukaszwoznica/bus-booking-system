@@ -24,7 +24,7 @@
                                     <label for="route">Route</label>
                                     <select name="route_id" id="route" required
                                             class="custom-select @error('route_id') is-invalid @enderror">
-                                        <option value="" hidden>Choose route</option>
+                                        <option></option>
                                         @foreach($routes as $route)
                                             <option
                                                 value="{{ $route->id }}" {{ old('route_id') == $route->id ? "selected" : ""}}>
@@ -44,7 +44,7 @@
                                     <label for="bus">Bus</label>
                                     <select name="bus_id" id="bus" required
                                             class="custom-select @error('bus_id') is-invalid @enderror">
-                                        <option value="" hidden>Choose bus</option>
+                                        <option></option>
                                         @foreach($buses as $bus)
                                             <option
                                                 value="{{ $bus->id }}" {{ old('bus_id') == $bus->id ? "selected" : ""}}>
@@ -205,25 +205,5 @@
 @endsection
 
 @push('adminlte_js')
-    <script>
-        window.addEventListener('load', function () {
-            flatpickr('.datepicker', {
-                allowInput: true,
-                minDate: 'today',
-                position: 'auto left',
-                locale: {
-                    firstDayOfWeek: 1
-                },
-            });
-
-            flatpickr('#departure-time', {
-                allowInput: true,
-                enableTime: true,
-                noCalendar: true,
-                time_24hr: true,
-                dateFormat: "H:i",
-                position: 'auto left',
-            })
-        })
-    </script>
+    @include('admin.rides.scripts.scripts')
 @endpush

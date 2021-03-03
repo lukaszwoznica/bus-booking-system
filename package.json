@@ -33,6 +33,7 @@
         "flatpickr": "^4.6.9",
         "icheck-bootstrap": "^3.0.1",
         "overlayscrollbars": "^1.13.0",
+        "select2": "^4.1.0-rc.0",
         "sweetalert2": "^10.14.1",
         "vue-chartjs": "^3.5.1"
     }

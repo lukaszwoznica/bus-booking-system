@@ -215,25 +215,5 @@
 @endsection
 
 @push('adminlte_js')
-    <script>
-        window.addEventListener('load', function () {
-            flatpickr('.datepicker', {
-                allowInput: true,
-                minDate: 'today',
-                position: 'auto left',
-                locale: {
-                    firstDayOfWeek: 1
-                },
-            });
-
-            flatpickr('#departure-time', {
-                allowInput: true,
-                enableTime: true,
-                noCalendar: true,
-                time_24hr: true,
-                dateFormat: "H:i",
-                position: 'auto left',
-            })
-        })
-    </script>
+    @include('admin.rides.scripts.scripts')
 @endpush
