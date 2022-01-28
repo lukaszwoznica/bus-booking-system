@@ -8,8 +8,7 @@
 
 .navbar-transparent {
     background: rgb(0, 0, 0);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.39827268798144255) 0%,
-        rgba(0, 0, 0, 0.7035948168329832) 50%, rgba(0, 0, 0, 1) 100%);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .70) 50%, rgba(0, 0, 0, 1) 100%);
 
     .nav-link {
         color: $white !important;
@@ -239,10 +238,10 @@ table {
 }
 
 a {
-   &.disabled {
-       pointer-events: none;
-       color: $gray-500;
-   }
+    &.disabled {
+        pointer-events: none;
+        color: $gray-500;
+    }
 }
 
 input {
@@ -341,7 +340,7 @@ input {
     }
 
     .flatpickr-months {
-        .flatpickr-next-month:hover,.flatpickr-prev-month:hover {
+        .flatpickr-next-month:hover, .flatpickr-prev-month:hover {
             svg {
                 fill: $green !important;
             }
