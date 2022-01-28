@@ -55,7 +55,7 @@ class DashboardController extends Controller
             'data' => $data
         ]];
         $chartData['stats'] = [
-            'percentageChange' => round(($thisMonth - $lastMonth) / $lastMonth * 100, 1),
+            'percentageChange' => $lastMonth == 0 ? 0 : round(($thisMonth - $lastMonth) / $lastMonth * 100, 1),
             'avg' => round(collect($bookingsCountData)->avg(), 1),
             'total' => collect($bookingsCountData)->sum()
         ];
