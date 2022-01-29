@@ -57,7 +57,7 @@
                                             </td>
                                             <td>
                                                 @php
-                                                    $perc = $ride->booked_seats * 100 / $ride->bus->seats;
+                                                    $perc = $ride->bus->seats == 0 ? 100 : $ride->booked_seats * 100 / $ride->bus->seats;
                                                 @endphp
                                                 <div class="progress">
                                                     <div
