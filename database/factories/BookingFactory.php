@@ -11,6 +11,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Booking::class, function (Faker $faker) {
     $ride = Ride::inRandomOrder()->with('route.locations')->first();
+
     $totalLocations = $ride->route->locations->count();
     $startLocation = $ride->route->locations
         ->take($totalLocations / 2)
@@ -18,16 +19,19 @@ $factory->define(Booking::class, function (Faker $faker) {
     $endLocation = $ride->route->locations
         ->where('pivot.order', '>', $startLocation->pivot->order)
         ->random();
-    $bookingStatus = collect(BookingStatus::getKeys())
-        ->map(fn($status) => strtolower($status))
-        ->random();
+
+    $travelStartTime = $ride->departure_time->addMinutes($startLocation->pivot->minutes_from_departure);
     $rideStartDate = $ride->isCyclic()
         ? $faker->dateTimeBetween('-5 months', '+1 month')
         : $ride->ride_date;
-    $travelStartTime = $ride->departure_time->addMinutes($startLocation->pivot->minutes_from_departure);
     $travelDate = $ride->departure_time->isSameDay($travelStartTime)
         ? $rideStartDate
         : Carbon::parse($rideStartDate)->addDay();
+
+    $bookingStatus = collect(BookingStatus::getKeys())
+        ->map(fn($status) => strtolower($status))
+        ->random();
+
     $rideDateDaysDiff = now()->diffInDays($rideStartDate, false);
     $timestampEndLimit = $rideDateDaysDiff <= 0 ? $rideDateDaysDiff - 1 : 0;
     $timestampStartLimit = $timestampEndLimit - 100;
