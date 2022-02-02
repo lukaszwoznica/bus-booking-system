@@ -123,8 +123,8 @@ class BookingService
 
     public function countInMonth(int $month, int $year): int
     {
-        return Booking::whereMonth('created_at', $month)
-            ->whereYear('created_at', $year)
+        return Booking::whereMonth('travel_date', $month)
+            ->whereYear('travel_date', $year)
             ->count();
     }
 }
