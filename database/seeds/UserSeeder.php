@@ -15,33 +15,27 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $superAdminRole = Role::where('name', 'super_admin')->first();
-        $adminRole = Role::where('name', 'admin')->first();
-        $userRole = Role::where('name', 'user')->first();
+        $userRoles = Role::all();
 
-        $superAdmin = User::create([
-           'first_name' => 'Jack',
-            'last_name' => 'Doe',
-            'email' => 'superadmin@example.com',
-            'password' => Hash::make('super123')
-        ]);
+        // Admins and test user account
+        factory(User::class)->create([
+            'email' => 'superadmin@bbs.xyz',
+            'password' => Hash::make('BbsSuper123')
+        ])->roles()->attach($userRoles);
 
-        $admin = User::create([
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('admin123')
-        ]);
+        factory(User::class)->create([
+            'email' => 'admin@bbs.xyz',
+            'password' => Hash::make('BbsAdmin123')
+        ])->roles()->attach($userRoles->whereNotIn('name', 'super_admin'));
 
-        $user = User::create([
-            'first_name' => 'Jane',
-            'last_name' => 'Doe',
-            'email' => 'user@example.com',
-            'password' => Hash::make('user123')
-        ]);
+        factory(User::class)->create([
+            'email' => 'user@bbs.xyz',
+            'password' => Hash::make('BbsUser123')
+        ])->roles()->attach($userRoles->where('name', 'user'));
 
-        $superAdmin->roles()->attach($superAdminRole);
-        $admin->roles()->attach($adminRole);
-        $user->roles()->attach($userRole);
+        // Dummy users
+        factory(User::class, 50)->create()->each(function ($user) use ($userRoles) {
+            $user->roles()->attach($userRoles->where('name', 'user'));
+        });
     }
 }
