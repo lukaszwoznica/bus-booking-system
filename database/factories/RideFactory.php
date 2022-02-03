@@ -12,7 +12,7 @@ $factory->define(Ride::class, function (Faker $faker) {
         'bus_id' => Bus::select('id')->inRandomOrder()->first(),
         'route_id' => Route::select('id')->inRandomOrder()->first(),
         'departure_time' => $faker->time('H:i'),
-        'ride_date' => $faker->dateTimeBetween('-6 months', '+6 months'),
+        'ride_date' => $faker->dateTimeBetween('-6 months', '+3 months'),
         'auto_confirm' => false
     ];
 });

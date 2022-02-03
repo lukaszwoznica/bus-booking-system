@@ -22,7 +22,7 @@ $factory->define(Booking::class, function (Faker $faker) {
 
     $travelStartTime = $ride->departure_time->addMinutes($startLocation->pivot->minutes_from_departure);
     $rideStartDate = $ride->isCyclic()
-        ? $faker->dateTimeBetween('-5 months', '+1 month')
+        ? $faker->dateTimeBetween('-5 months', '+1 months')
         : $ride->ride_date;
     $travelDate = $ride->departure_time->isSameDay($travelStartTime)
         ? $rideStartDate
