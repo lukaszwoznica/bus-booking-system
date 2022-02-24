@@ -13,7 +13,7 @@ try {
     require('overlayscrollbars');
     require('../../vendor/almasaeed2010/adminlte/dist/js/adminlte');
     require('bootstrap');
-    require('datatables.net-bs4');
+    require('datatables.net-bs4')(window, $);
     require('datatables.net-buttons-bs4');
 } catch (e) {}
 
