@@ -117,8 +117,8 @@ php artisan serve
 
 ## Environment Configuration
 
-This section describes how to configure environment variables in the .env file.
-For more detailed information [see the official Laravel documentation](https://laravel.com/docs/7.x).
+This section describes how to configure environment variables in the .env file. For more detailed
+information [see the official Laravel documentation](https://laravel.com/docs/7.x).
 
 ### Database - MySQL
 
@@ -176,6 +176,8 @@ A working live demo of the Bus Booking System is available here: https://bbs-lar
 ### :information_source: Notes
 
 * The database is automatically refreshed and populated with dummy data every two hours in this demo.
+
+* The first load of the website may take a while because the Heroku dyno may be asleep.
 
 * You can create a new user account or log in using one of the following credentials:
 
